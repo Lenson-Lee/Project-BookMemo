@@ -1,0 +1,133 @@
+/**
+ * @file Date.css
+ * @author Tiumsolutions (developers@tiumsolutions.com)
+ * @brief react-datepicker 커스텀, 날짜 선택 기능.
+ *        커스텀한 디자인을 사용하기 위해서는 Date.css를 꼭 함께 넣어야합니다.
+ **/
+@media (min-width: 768px) {
+  /* 캘린더 전체 형태 */
+  .react-datepicker {
+    border-style: solid;
+    border-color: rgb(203 213 225);
+    border-radius: 0rem !important;
+    display: flex;
+    flex-direction: row !important;
+    padding: 3rem 2rem 3rem 2rem !important;
+  }
+}
+.normal-day {
+  background: white !important;
+  color: black !important;
+  width: 28px;
+  height: 28px;
+  line-height: 1.8;
+  text-align: center;
+  padding: 2px !important;
+}
+.react-datepicker__day--range-end {
+  /* 마지막 날짜 클릭하면 색상 변경 */
+  background: #111827 !important; /* gray-600 */
+  color: #fff !important;
+  border-radius: 100% !important;
+}
+.selected-day {
+  background: navy !important;
+  color: white !important;
+  border-radius: 50% !important;
+  font-weight: 700;
+}
+/* ============================= */
+
+/* 캘린더 전체 형태 */
+.react-datepicker {
+  border-style: solid;
+  border-color: rgb(203 213 225);
+  border-radius: 0rem !important;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 2rem 1rem 2rem 1rem;
+}
+
+/* Month 넘어가는 버튼(react-datepicker에 absolute 걸려있음.) */
+.react-datepicker__navigation {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  top: 3rem;
+}
+
+/* 헤더 */
+.react-datepicker__header {
+  background: white !important;
+  border-bottom: none !important;
+}
+.react-datepicker__month-container {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+/* 헤더 - April 2022 부분 */
+.react-datepicker__current-month {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+/* 헤더 - 요일 */
+.react-datepicker__day-names {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* 선택된 기간 범위 내의 색상 */
+.react-datepicker__day--in-range {
+  background: #e5e7eb !important; /* gray-200 */
+  color: #1f2937 !important; /* gray-500 */
+  font-weight: 500;
+  border-radius: 100% !important;
+}
+/* 선택하지 않은 상태에서 방황하는 마우스 */
+.react-datepicker__day:hover {
+  border-radius: 100% !important;
+  background: #f3f4f6 !important; /* gray-100 */
+  color: #1f2937 !important; /* gray-500 */
+}
+/* 중간 기간에 hover시 짙은색으로 효과 */
+.react-datepicker__day--in-range:hover {
+  background: #d1d5db !important; /* gray-300 */
+  color: #1f2937 !important; /* gray-500 */
+  font-weight: 500;
+}
+/* 첫째날 선택 후 마우스가 지나가는 날짜에 표시 */
+.react-datepicker__day--in-selecting-range {
+  background: #f3f4f6 !important; /* gray-100 */
+  color: #111827 !important;
+  font-weight: 500;
+  border-radius: 100% !important;
+}
+
+/* 이건 뭡니까 휴먼? */
+.react-datepicker__week-number.react-datepicker__week-number--clickable:hover {
+  border-radius: 25%;
+  background: #111827 !important;
+}
+
+/* 선택된 마지막 날 */
+.react-datepicker__day--keyboard-selected {
+  background: #111827; /* gray-600 */
+  color: #fff;
+  border-radius: 100% !important;
+}
+/* 첫 클릭으로 선택 할 때 */
+.react-datepicker__day--selected {
+  background: #111827 !important; /* gray-600 */
+  color: #fff !important;
+  border-radius: 100% !important;
+}
+.react-datepicker__day--today {
+  color: #111827; /* gray-500 */
+}
+
+/* input창 */
+.react-datepicker__input-container input[type="text"] {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  /* pointer-events: none; */
+}

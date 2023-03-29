@@ -1,0 +1,50 @@
+import Link from "next/link";
+
+interface Props {
+  memodata: [];
+  router: any;
+  memotitle: any;
+}
+const list = ({ memodata, router, memotitle }: Props) => {
+  return (
+    <>
+      <p className="text-xl font-semibold">최근 기록한 메모</p>
+      <div className="mt-4 flex gap-2 flex-wrap">
+        {router?.uid &&
+          memodata.map((memo: any, index: number) => {
+            //ㅜㅜ 추후에 쿼리를 바꿔야겠다...
+            //타이틀을 index로 찾으면 제목이 섞여서.... 반복문노가다로 찾는다
+
+            let title: string = "";
+            memotitle.forEach((item: any) => {
+              if (memo.isbn === item.isbn) {
+                title = item.title.title;
+              }
+            });
+
+            return (
+              <Link
+                href={{
+                  pathname: `/${router?.screenName}"/mybook/${title}`,
+                  query: {
+                    isbn: memo.isbn,
+                    isbn13: memo.isbn13 ? memo.isbn13 : "null",
+                    uid: router?.uid,
+                  },
+                }}
+                key={memo.isbn13 + index}
+                className="text-sm bg-gray-100 rounded-lg w-full p-5 line-clamp-3 overflow-hidden"
+              >
+                <p className="text-xs line-clamp-1  text-gray-400 mb-1">
+                  {title}
+                </p>
+                <p>{memo.content}</p>
+              </Link>
+            );
+          })}
+      </div>
+    </>
+  );
+};
+
+export default list;

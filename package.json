@@ -1,0 +1,71 @@
+{
+  "name": "bookproject",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "localdev": "next dev -p 5000",
+    "dev": "dotenv -e .env.development next dev -p 5000",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "next lint",
+    "prebuild": "tailwindcss-cli build -o styles/tailwindSSR.css --minify",
+    "migrate:mysql": "dotenv -e .env.development -- npx prisma migrate dev --name tables",
+    "dbpush:mysql": "dotenv -e .env.development -- npx prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.10.1",
+    "apexcharts": "^3.37.1",
+    "axios": "^1.3.2",
+    "babel-plugin-styled-components": "^2.0.7",
+    "bcrypt": "^5.1.0",
+    "caniuse-lite": "^1.0.30001469",
+    "chart.js": "^4.2.1",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
+    "firebase": "^9.17.1",
+    "firebase-admin": "^11.5.0",
+    "next": "^13.2.5-canary.12",
+    "next-auth": "^4.19.2",
+    "raw-loader": "^4.0.2",
+    "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.10.0",
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.3",
+    "react-slick": "^0.29.0",
+    "styled-components": "^5.3.6",
+    "tailwindcss-cli": "^0.1.2",
+    "twin.macro": "^3.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.1",
+    "@types/react": "18.0.27",
+    "@types/react-datepicker": "^4.8.0",
+    "@types/react-dom": "18.0.10",
+    "@types/react-slick": "^0.23.10",
+    "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.1",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "postcss": "^8.4.21",
+    "prisma": "^4.11.0",
+    "slick-carousel": "^1.8.1",
+    "tailwindcss": "^3.2.6",
+    "typescript": "4.9.5"
+  },
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lenson-Lee/server_book.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lenson-Lee/server_book/issues"
+  },
+  "homepage": "https://github.com/Lenson-Lee/server_book#readme",
+  "description": ""
+}
