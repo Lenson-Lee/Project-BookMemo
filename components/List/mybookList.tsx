@@ -91,9 +91,9 @@ const MyBookList = () => {
   }, [authUser, state]);
 
   useEffect(() => {
-    let arr = [];
+    let arr: any = [];
     if (0 < pageList && pageList > start + maxPage) {
-      for (let i = start; i <= start + maxPage - 1; i++) {
+      for (let i = start ? start : 1; i <= start + maxPage - 1; i++) {
         arr.push(i);
       }
     } else if (pageList < start + maxPage) {
