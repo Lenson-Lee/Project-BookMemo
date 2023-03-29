@@ -21,9 +21,9 @@ const BookListSlider = ({ data }: Props) => {
     <>
       {/* react-slider css import시 오류발생 */}
       {/* 책 리스트 슬라이더로 출력 */}
-      <Slider {...settings}>
-        {data &&
-          data?.data.item.map((book: any) => (
+      {data && (
+        <Slider {...settings}>
+          {data?.data.item.map((book: any) => (
             <Link
               // as={`/search/isbn=${book.isbn}&isbn13=${
               //   book.isbn13 ? book.isbn13 : "null"
@@ -52,7 +52,8 @@ const BookListSlider = ({ data }: Props) => {
               </div>
             </Link>
           ))}
-      </Slider>
+        </Slider>
+      )}
     </>
   );
 };
