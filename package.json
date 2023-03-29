@@ -58,14 +58,14 @@
   "main": "next.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lenson-Lee/server_book.git"
+    "url": "git+https://github.com/Lenson-Lee/Project-ServerBook.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lenson-Lee/server_book/issues"
+    "url": "https://github.com/Lenson-Lee/Project-ServerBook/issues"
   },
-  "homepage": "https://github.com/Lenson-Lee/server_book#readme",
+  "homepage": "https://github.com/Lenson-Lee/Project-ServerBook#readme",
   "description": ""
 }
