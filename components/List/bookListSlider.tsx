@@ -45,12 +45,10 @@ const BookListSlider = ({ data }: Props) => {
                 className="object-cover object-center border bg-gray-100 mx-auto w-44  h-60"
               />
               <div className="w-44 mt-4 mx-auto">
-                <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
+                <div className=" text-base line-clamp-1 font-semibold">
                   {book.title}
                 </div>
-                <div className="line-clamp-1 text-sm line-clamp-1">
-                  {book.author}
-                </div>
+                <div className=" text-sm line-clamp-1">{book.author}</div>
               </div>
             </Link>
           ))}
