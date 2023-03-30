@@ -16,7 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { getSimilarList } from "@/pages/api/search/search.similar.book";
 import Link from "next/link";
 import Image from "next/image";
-import react, { useState } from "react";
+import react, { useState, useEffect } from "react";
 
 import { useAuth } from "@/contexts/auth_user.context";
 import { getComment } from "@/pages/api/comment/comment.get";
@@ -93,7 +93,9 @@ function SearchQuery({ similar, commentDB }: Props) {
   const { data } = useQuery(["comment"], queryFn, {
     staleTime: 10,
   });
-
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   /** 기록 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
     const response = await fetch(`/api/comment/comment.add`, {
@@ -278,8 +280,8 @@ function SearchQuery({ similar, commentDB }: Props) {
                 </div>
               );
             })}
-          {data === null && <Sample />}
         </Slider>
+        {data?.length < 2 && <Sample />}
       </div>
       <div className="bg-white w-full py-10 px-20 mt-10 rounded-xl">
         <div className="flex gap-x-5 items-end mb-8 ">
