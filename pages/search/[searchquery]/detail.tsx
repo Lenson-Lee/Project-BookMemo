@@ -36,6 +36,10 @@ interface AddType {
   content: string;
   score: any;
 }
+interface LikeType {
+  id: number;
+  like: number;
+}
 function SearchQuery({ similar, commentDB }: Props) {
   const settings = {
     dots: false,
@@ -96,6 +100,7 @@ function SearchQuery({ similar, commentDB }: Props) {
   useEffect(() => {
     console.log(data);
   }, [data]);
+
   /** 기록 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
     const response = await fetch(`/api/comment/comment.add`, {
@@ -115,6 +120,28 @@ function SearchQuery({ similar, commentDB }: Props) {
       console.log("useMutation > POST");
     },
   });
+
+  /** 좋아요 클릭 이벤트 */
+  async function likeQuery(likeData: LikeType) {
+    const response = await fetch(`/api/comment/comment.like.add`, {
+      method: "POST",
+      body: JSON.stringify(likeData),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    return response.json();
+  }
+  const likeMutation = useMutation(
+    (likeData: LikeType) => likeQuery(likeData),
+    {
+      onSuccess: () => {
+        // postTodo가 성공하면 todos로 맵핑된 useQuery api 함수를 실행합니다.
+        queryClient.invalidateQueries("comment");
+        console.log("like useMutation > POST");
+      },
+    }
+  );
   //
   return (
     <ServiceLayout>
@@ -152,38 +179,6 @@ function SearchQuery({ similar, commentDB }: Props) {
               <div className="mt-2 flex gap-x-2">
                 <div className="text-sm">{querydata.author}</div>
                 <div className="text-sm">{querydata.categoryName}</div>
-              </div>
-              <div className="mt-4 flex gap-x-4 items-center text-sm">
-                <p className="px-2 py-1 rounded-lg bg-yellow-100 text-amber-500">
-                  별점주기
-                </p>
-                <div className="flex">
-                  {star.map((el, index) => {
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          selectScore(index + 1);
-                        }}
-                        className={
-                          star[index] ? "text-yellow-300" : "text-gray-200"
-                        }
-                      >
-                        <svg
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
               {/* edit zone */}
               <textarea
@@ -259,8 +254,16 @@ function SearchQuery({ similar, commentDB }: Props) {
                           {item?.displayName}
                         </p>
                       </div>
-                      {/* 좋아요 */}
-                      <div className="px-2 py-1 bg-white border rounded-full text-sm text-rose-400 flex gap-x-1 items-center">
+                      {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}
+                      <button
+                        onClick={() => {
+                          likeMutation.mutate({
+                            id: item.id,
+                            like: item.like + 1,
+                          });
+                        }}
+                        className="px-2 py-1 bg-white border rounded-full text-sm text-rose-400 flex gap-x-1 items-center"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
@@ -269,9 +272,9 @@ function SearchQuery({ similar, commentDB }: Props) {
                         >
                           <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z" />
                         </svg>
-
-                        <p>{item.score}</p>
-                      </div>
+                        <p>좋아요</p>
+                        <p>{item.like}</p>
+                      </button>
                     </div>
                     {/* content */}
                     <div className="line-clamp-5">{item.content}</div>
@@ -280,7 +283,7 @@ function SearchQuery({ similar, commentDB }: Props) {
               );
             })}
         </Slider>
-        {data?.length < 2 && <Sample />}
+        {data?.length < 1 && <Sample />}
       </div>
       <div className="bg-white w-full py-10 px-20 mt-10 rounded-xl">
         <div className="flex gap-x-5 items-end mb-8 ">

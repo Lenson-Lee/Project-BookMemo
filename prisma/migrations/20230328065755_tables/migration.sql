@@ -7,7 +7,7 @@ CREATE TABLE `Comment` (
     `userId` VARCHAR(191) NOT NULL,
     `isbn` VARCHAR(191) NOT NULL,
     `isbn13` VARCHAR(191) NULL,
-    `score` INTEGER NOT NULL,
+    `like` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `content` MEDIUMTEXT NULL,
 

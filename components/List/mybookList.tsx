@@ -196,6 +196,13 @@ const MyBookList = () => {
             </div>
           </Link>
         ))}
+        {dataList?.length === 0 && (
+          <div>
+            <div className="border bg-gray-100 text-gray-400 w-44 mx-auto h-60 flex items-center justify-center">
+              저장한 책이 없어요 😥
+            </div>
+          </div>
+        )}
       </div>
       {/* Paging zone __________________________________________ */}
       <div className="mt-20 flex gap-x-2 justify-center">

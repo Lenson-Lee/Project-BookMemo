@@ -8,10 +8,9 @@ datasource db {
 }
 
 model User {
-  id      Int        @id @default(autoincrement())
-  uid     String     @unique
-  memo    BookMemo[]
-  Comment Comment[]
+  id   Int        @id @default(autoincrement())
+  uid  String     @unique
+  memo BookMemo[]
 }
 
 model BookMemo {
@@ -47,18 +46,16 @@ model MemoList {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  isbn      String
-  isbn13    String?
-  score     Int
-  createdAt DateTime @default(now())
-  content   String?  @db.MediumText
+  id          Int      @id @default(autoincrement())
+  userId      String
+  isbn        String
+  isbn13      String?
+  score       Int
+  createdAt   DateTime @default(now())
+  content     String?  @db.MediumText
+  role        Role     @default(USER)
   displayName String
-  role      Role     @default(USER)
-  User      User     @relation(fields: [userId], references: [uid])
-
-  @@index([userId], map: "Comment_userId_fkey")
+  like        Int      @default(0)
 }
 
 enum Role {
