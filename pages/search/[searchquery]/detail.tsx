@@ -247,10 +247,9 @@ function SearchQuery({ similar, commentDB }: Props) {
         )}
         <Slider {...settings}>
           {data &&
-            data.map((item: any) => {
-              console.log(item);
+            data.map((item: any, index: number) => {
               return (
-                <div key={item.id} className="mt-2">
+                <div key={item.id + index} className="mt-2">
                   <div className="mx-2 p-5 rounded-lg bg-gray-100 h-56">
                     {/* profile */}
                     <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -300,7 +299,7 @@ function SearchQuery({ similar, commentDB }: Props) {
                 }/detail`,
                 query: { data: JSON.stringify(book) },
               }}
-              key={book.title}
+              key={book.title + index}
               className=""
             >
               <Image
