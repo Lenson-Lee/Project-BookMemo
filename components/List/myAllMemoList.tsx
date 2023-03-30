@@ -8,7 +8,12 @@ interface Props {
 const list = ({ memodata, router, memotitle }: Props) => {
   return (
     <>
-      <p className="text-xl font-semibold">최근 기록한 메모</p>
+      <div className="">
+        <p className="text-xl font-semibold">최근 기록한 메모</p>
+        <div className="text-sm text-gray-600 flex gap-x-1">
+          <p>메모를 클릭 시 해당 책으로 이동합니다.</p>
+        </div>
+      </div>
       <div className="mt-4 flex gap-2 flex-wrap">
         {router?.uid &&
           memodata.map((memo: any, index: number) => {
@@ -42,6 +47,11 @@ const list = ({ memodata, router, memotitle }: Props) => {
               </Link>
             );
           })}
+        {router?.uid && memodata?.length === 0 && (
+          <div className="text-sm bg-gray-100 text-gray-500 rounded-lg w-full p-5 line-clamp-3 overflow-hidden">
+            <p> 우선 책을 눌러 기록을 해주세요</p>
+          </div>
+        )}
       </div>
     </>
   );

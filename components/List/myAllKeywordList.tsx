@@ -17,6 +17,11 @@ const list = ({ keywordList }: Props) => {
             </div>
           );
         })}
+        {keywordList?.length === 0 && (
+          <div className="px-2 py-1 bg-gray-50 cursor-pointer text-gray-400 border border-gray-400 text-sm rounded-full inline">
+            기록한 키워드가 없어요
+          </div>
+        )}
       </div>
     </>
   );
