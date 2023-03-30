@@ -26,12 +26,10 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
   const rankData = JSON.parse(rankbook);
   const scoreData = JSON.parse(scorebook);
   const categoryData = JSON.parse(categorybook);
-
   const { authUser } = useAuth();
 
   let length: number = 6;
   if (categoryData.length < 6) {
-    console.log(categoryData.length);
     // setLength(categoryData.length);
     length = categoryData.length;
   }
@@ -267,7 +265,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       });
     }
   }
-
   return {
     props: {
       rankbook: JSON.stringify(rankbooklist),
