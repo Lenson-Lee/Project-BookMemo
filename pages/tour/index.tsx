@@ -60,7 +60,7 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
           <div className="flex gap-x-5 items-end mb-8">
             <div className="text-xl font-semibold flex gap-x-2">
               {authUser?.displayName}님이 가장 좋아하는
-              <p className="text-yellow-400"> {categoryData[0].field}</p> 장르
+              <p className="text-yellow-400"> {categoryData[0]?.field}</p> 장르
               Best
             </div>
             <p className="text-gray-500 text-sm">
@@ -102,10 +102,10 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                     </svg>
                     {"평균 " + category.score.score.toFixed(1) + "점"}
                   </div>
-                  <div className="line-clamp-2 mt-2 text-base line-clamp-1 font-semibold">
+                  <div className="mt-2 text-base line-clamp-1 font-semibold">
                     {category.api.title}
                   </div>
-                  <div className="line-clamp-1 text-sm line-clamp-1">
+                  <div className="text-sm line-clamp-1">
                     {category.api.author}
                   </div>
                 </div>
@@ -145,12 +145,10 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                 className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
               />
               <div className="w-44 mt-4 mx-auto">
-                <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
+                <div className="text-base line-clamp-1 font-semibold">
                   {rank.title}
                 </div>
-                <div className="line-clamp-1 text-sm line-clamp-1">
-                  {rank.author}
-                </div>
+                <div className="text-sm line-clamp-1">{rank.author}</div>
               </div>
             </Link>
           ))}
@@ -200,12 +198,10 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                   </svg>
                   {"평균 " + score.score.score.toFixed(1) + "점"}
                 </div>
-                <div className="line-clamp-2 mt-2 text-base line-clamp-1 font-semibold">
+                <div className="mt-2 text-base line-clamp-1 font-semibold">
                   {score.api.title}
                 </div>
-                <div className="line-clamp-1 text-sm line-clamp-1">
-                  {score.api.author}
-                </div>
+                <div className="text-sm line-clamp-1">{score.api.author}</div>
               </div>
             </Link>
           ))}
@@ -226,7 +222,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const scoreList = await getHighScoreBook();
 
   /** 찜한 책 포함 내가 주로 읽는 책 1등 추출 후 랭킹별 책 출력 */
-  let mostCategoryList;
+  let mostCategoryList: any;
   if (uid) {
     mostCategoryList = await getMostCategoryBook(uid);
   }

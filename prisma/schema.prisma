@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,11 +8,9 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  uid       String   @unique
-  memo      BookMemo[]
-  comment      Comment[]
-
+  id      Int        @id @default(autoincrement())
+  uid     String     @unique
+  memo    BookMemo[]  
 }
 
 model BookMemo {
@@ -34,15 +29,14 @@ model BookMemo {
   fieldcount Int?
   cover     String?
   author    User  @relation(fields: [userId], references: [uid])
-
   role      Role     @default(USER)
 }
 
 model MemoList {
   id        Int      @id @default(autoincrement())
   userId    String
-  isbn      String      
-  isbn13    String?      
+  isbn      String
+  isbn13    String?
   content   String?  @db.MediumText
   createdAt DateTime @default(now())
   keywords  String?
@@ -50,17 +44,16 @@ model MemoList {
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
-    userId    String
-    isbn      String      
-    isbn13    String?   
-    score     Int
-    createdAt DateTime @default(now())
-    content   String?  @db.MediumText
+  id          Int      @id @default(autoincrement())
+  userId      String
+  isbn        String
+  isbn13      String?
+  score       Int
+  createdAt   DateTime @default(now())
+  content     String?  @db.MediumText
+  role        Role     @default(USER)
+  displayName String
 
-    
-    author    User  @relation(fields: [userId], references: [uid])
-    role      Role     @default(USER)
 }
 
 enum Role {

@@ -350,7 +350,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context: any
 ) => {
   /**MybookList >라우트에서 넘어온 쿼리 */
-  console.log(context.query.isbn);
 
   /** apidata, mydata 받기 */
   const result = await getBookDetail({
