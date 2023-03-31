@@ -1,10 +1,10 @@
-import MyBookList from "@/components/List/mybookList";
-import MyAllKeywordList from "@/components/List/myAllKeywordList";
-import MyAllMemoList from "@/components/List/myAllMemoList";
-import ServiceLayout from "@/components/service_layout";
-import Chart from "@/components/Chart/Chart";
-import BarChart from "@/components/Chart/BarChart";
-import { getMyTotalData } from "@/pages/api/mymemo/mymemo.get";
+import MyBookList from "@/components/bookProject/List/mybookList";
+import MyAllKeywordList from "@/components/bookProject/List/myAllKeywordList";
+import MyAllMemoList from "@/components/bookProject/List/myAllMemoList";
+import ServiceLayout from "@/components/bookProject/service_layout";
+import Chart from "@/components//bookProject/Chart/Chart";
+import BarChart from "@/components//bookProject/Chart/BarChart";
+import { getMyTotalData } from "@/pages/api/bookproject/mymemo/mymemo.get";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
@@ -33,7 +33,7 @@ function Mybook({ alldata }: Props) {
   /** 통계, 총 메모, 총 키워드 조회 */
   const queryFn = async () => {
     const res = await fetch(
-      `/api/mymemo/mymemo.total.get?userId=${router.query.uid}`
+      `/api/bookproject/mymemo/mymemo.total.get?userId=${router.query.uid}`
     );
     const data = await res.json();
     return data.data;

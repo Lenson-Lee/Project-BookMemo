@@ -52,7 +52,7 @@ const navbar = function () {
     <div className="bg-white border-b">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 py-5">
         <Link
-          href="/"
+          href="/bookproject"
           className="font-dangam flex items-start justify-center text-center text-3xl font-semibold text-yellow-300"
         >
           My Book{" "}
@@ -74,7 +74,10 @@ const navbar = function () {
         <div className="flex gap-x-16">
           <Link
             href={{
-              pathname: `/${authUser?.email?.replace("@gmail.com", "")}`,
+              pathname: `/bookproject/${authUser?.email?.replace(
+                "@gmail.com",
+                ""
+              )}`,
               query: { uid: authUser?.uid },
             }}
             className="text-lg font-semibold"
@@ -82,7 +85,10 @@ const navbar = function () {
             나의 서재
           </Link>
           <Link
-            href={{ pathname: "/tour", query: { uid: authUser?.uid } }}
+            href={{
+              pathname: "/bookproject/tour",
+              query: { uid: authUser?.uid },
+            }}
             className="text-lg font-semibold"
           >
             둘러보기

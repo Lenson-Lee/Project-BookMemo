@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import Link from "next/link";
 const SearchBar = () => {
   const [searchquery, setQuery] = useState<string>();
 
   return (
     <form
-      action={`/search/${searchquery}`}
+      action={`/bookproject/search/${searchquery}`}
       method="post"
       className="w-2/5 rounded-full px-4 border-2 border-yellow-400 flex items-center justify-between"
     >
@@ -18,14 +17,7 @@ const SearchBar = () => {
         className="px-3 py-2 w-full outline-none font-light"
         placeholder="검색어를 입력해 주세요"
       />
-      <button
-        type="submit"
-        // href={`/search?query=${searchquery}`}
-        // onClick={() => {
-        //   router.push(`/search?query=${searchquery}`);
-        // }}
-        className="text-yellow-400 p-2"
-      >
+      <button type="submit" className="text-yellow-400 p-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"

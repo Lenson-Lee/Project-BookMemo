@@ -1,10 +1,12 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import { useState, useEffect } from "react";
-// import DatePicker from "@/components/DatePicker/DatePicker";
+// import DatePicker from "@/components/bookProject/DatePicker/DatePicker";
 
 import dynamic from "next/dynamic";
 import MyBookInfo from "../Popup/MyBookInfo";
-const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
+const DatePicker = dynamic(
+  () => import("@/components/bookProject/DatePicker/DatePicker")
+);
 
 interface Props {
   data: any;
@@ -47,7 +49,7 @@ const SearchInfo = ({ data }: Props) => {
       cover: data.cover,
     };
     console.log(postdata);
-    await fetch("/api/mybook/mybook.add", {
+    await fetch("/api/bookproject/mybook/mybook.add", {
       method: "POST",
       body: JSON.stringify(postdata),
       headers: {
@@ -65,7 +67,7 @@ const SearchInfo = ({ data }: Props) => {
       );
       if (result) {
         console.log(authUser.authUser?.email?.replace("@", ""));
-        document.location = `/${authUser.authUser?.email?.replace(
+        document.location = `/bookproject/${authUser.authUser?.email?.replace(
           "@",
           ""
         )}?uid=${uid}`;

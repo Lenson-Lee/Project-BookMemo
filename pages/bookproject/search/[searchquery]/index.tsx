@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
-import { searchResult } from "../../api/search/search.result";
-import ServiceLayout from "@/components/service_layout";
+import { searchResult } from "@/pages/api/bookproject/search/search.result";
+import ServiceLayout from "@/components/bookProject/service_layout";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -23,7 +23,7 @@ function SearchQuery({ target, result }: Props) {
         {result?.map((book: any) => (
           <Link
             href={{
-              pathname: "/search/" + target + "/detail",
+              pathname: "/bookproject/search/" + target + "/detail",
               query: { data: JSON.stringify(book) },
             }}
             key={book.isbn}
@@ -37,12 +37,10 @@ function SearchQuery({ target, result }: Props) {
               className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
             ></Image>
             <div className="w-44 mt-4 mx-auto">
-              <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
+              <div className="text-base line-clamp-1 font-semibold">
                 {book.title}
               </div>
-              <div className="line-clamp-1 text-sm line-clamp-1">
-                {book.author}
-              </div>
+              <div className="text-sm line-clamp-1">{book.author}</div>
             </div>
           </Link>
         ))}

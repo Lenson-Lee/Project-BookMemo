@@ -1,16 +1,16 @@
-import ServiceLayout from "@/components/service_layout";
+import ServiceLayout from "@/components/bookProject/service_layout";
 import { GetServerSideProps } from "next";
 import {
   getHighScoreBook,
   getMostCategoryBook,
   getMostPopularBook,
-} from "../api/tour/tour.get.popular";
+} from "@/pages/api/bookproject/tour/tour.get.popular";
 import Link from "next/link";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getSearchDetail } from "../api/search/search.detail";
+import { getSearchDetail } from "@/pages/api/bookproject/search/search.detail";
 
 import { useAuth } from "@/contexts/auth_user.context";
 import Image from "next/image";
@@ -70,7 +70,9 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
               <Link
                 key={category.api.isbn}
                 href={{
-                  pathname: `/search/isbn=${category.api.isbn}&isbn13=${
+                  pathname: `/bookproject/search/isbn=${
+                    category.api.isbn
+                  }&isbn13=${
                     category.api.isbn13 ? category.api.isbn13 : "null"
                   }/detail`,
                   query: { data: JSON.stringify(category.api) },
@@ -128,7 +130,7 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
             <Link
               key={rank.isbn}
               href={{
-                pathname: `/search/isbn=${rank.isbn}&isbn13=${
+                pathname: `/bookproject/search/isbn=${rank.isbn}&isbn13=${
                   rank.isbn13 ? rank.isbn13 : "null"
                 }/detail`,
                 query: { data: JSON.stringify(rank) },
@@ -166,7 +168,7 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
             <Link
               key={score.api.isbn}
               href={{
-                pathname: `/search/isbn=${score.api.isbn}&isbn13=${
+                pathname: `/bookproject/search/isbn=${score.api.isbn}&isbn13=${
                   score.api.isbn13 ? score.api.isbn13 : "null"
                 }/detail`,
                 query: { data: JSON.stringify(score.api) },

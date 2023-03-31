@@ -31,7 +31,7 @@ export default function useNextAuth() {
         console.info(session);
 
         //파이어베이스 add
-        const resp = await fetch("/api/members.add", {
+        const resp = await fetch("/api/bookproject/members.add", {
           method: "post",
           headers: {
             "Content-Type": "application/json",

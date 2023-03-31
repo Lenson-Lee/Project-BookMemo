@@ -1,9 +1,9 @@
-import ServiceLayout from "@/components/service_layout";
-import { GoogleLoginBtn } from "@/components/Login/google_login_btn";
-import { KakaoLoginBtn } from "@/components/Login/kakao_login_btn";
+import ServiceLayout from "@/components/bookProject/service_layout";
+import { GoogleLoginBtn } from "@/components/bookProject/Login/google_login_btn";
+import { KakaoLoginBtn } from "@/components/bookProject/Login/kakao_login_btn";
 import { NextPage } from "next";
 import { useAuth } from "@/contexts/auth_user.context";
-import LoginButton from "@/components/Login/loginButton";
+import LoginButton from "@/components/bookProject/Login/loginButton";
 import { useEffect } from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
 
@@ -26,7 +26,7 @@ const JoinPage: NextPage = () => {
     signIn(form);
 
     //파이어베이스 add
-    const resp = await fetch("/api/members.add", {
+    const resp = await fetch("/api/bookproject/members.add", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

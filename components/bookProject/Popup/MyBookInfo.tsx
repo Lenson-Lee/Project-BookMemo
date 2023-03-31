@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
+const DatePicker = dynamic(
+  () => import("@/components/bookProject/DatePicker/DatePicker")
+);
 
 /**
  * 등록/수정 할 때 사용자 독서정보 팝업

@@ -1,7 +1,7 @@
-import ServiceLayout from "@/components/service_layout";
-import BookInfo from "@/components/Info/BookInfo";
-import { getBookDetail } from "@/pages/api/mybook/mybook.get.detail";
-import { getMymemoList } from "@/pages/api/mymemo/mymemo.get";
+import ServiceLayout from "@/components/bookProject/service_layout";
+import BookInfo from "@/components/bookProject/Info/BookInfo";
+import { getBookDetail } from "@/pages/api/bookproject/mybook/mybook.get.detail";
+import { getMymemoList } from "@/pages/api/bookproject/mymemo/mymemo.get";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -65,7 +65,7 @@ function DetailQuery({ serverdata, userData }: Props) {
   const udata = JSON.parse(userData);
   const queryFn = async () => {
     const res = await fetch(
-      `/api/mymemo/mymemo.query.get?userId=${udata.uid}&isbn=${udata.isbn}`
+      `/api/bookproject/mymemo/mymemo.query.get?userId=${udata.uid}&isbn=${udata.isbn}`
     );
     const data = await res.json();
     return data.data;
@@ -79,7 +79,7 @@ function DetailQuery({ serverdata, userData }: Props) {
 
   /** 기록 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
-    const response = await fetch(`/api/mymemo/mymemo.add`, {
+    const response = await fetch(`/api/bookproject/mymemo/mymemo.add`, {
       method: "POST",
       body: JSON.stringify(addData),
       headers: {
@@ -104,7 +104,7 @@ function DetailQuery({ serverdata, userData }: Props) {
     content: string;
     keywords: any;
   }) {
-    const response = await fetch(`/api/mymemo/mymemo.update`, {
+    const response = await fetch(`/api/bookproject/mymemo/mymemo.update`, {
       method: "put",
       body: JSON.stringify(updateData),
       headers: {
@@ -129,7 +129,7 @@ function DetailQuery({ serverdata, userData }: Props) {
 
   /** 기록 삭제 (데이터 Delete) */
   async function deleteQuery(deleteData: { id: number }) {
-    const response = await fetch(`/api/mymemo/mymemo.delete`, {
+    const response = await fetch(`/api/bookproject/mymemo/mymemo.delete`, {
       method: "delete",
       body: JSON.stringify(deleteData),
       headers: {
@@ -366,7 +366,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   /** useQuery로 값 추가되었을 때 갱신 */
   // const queryFn = async () => {
   //   const res: any = await fetch(
-  //     `/api/mymemo/mymemo.query.get?userId=${context.query?.uid}&isbn=${context.query?.isbn}`
+  //     `/api/bookproject/mymemo/mymemo.query.get?userId=${context.query?.uid}&isbn=${context.query?.isbn}`
   //   );
   //   const data = await res.json();
   //   return data.data;

@@ -8,7 +8,9 @@ import MyBookInfo from "../Popup/MyBookInfo";
 import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
 
-const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
+const DatePicker = dynamic(
+  () => import("@/components/bookProject/DatePicker/DatePicker")
+);
 
 interface Props {
   apidata: any; // 알라딘에서 긁은 데이터
@@ -30,7 +32,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
 
   // 삭제 이벤트 통신
   const deleteData = async (target: React.SyntheticEvent) => {
-    const response = await fetch("/api/mybook/mybook.delete", {
+    const response = await fetch("/api/bookproject/mybook/mybook.delete", {
       method: "delete",
       body: JSON.stringify(target),
       headers: {
@@ -51,7 +53,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
       start: getDataList ? getDataList.start : null,
       end: getDataList ? getDataList.end : null,
     };
-    const response = await fetch("/api/mybook/mybook.update", {
+    const response = await fetch("/api/bookproject/mybook/mybook.update", {
       method: "put",
       body: JSON.stringify(updatedata),
       headers: {
@@ -65,7 +67,9 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
   async function response() {
     updateData().then(() => {
       alert("수정되었었습니다.");
-      router.push(`/${router.query.screenName}?uid=${authUser.authUser?.uid}`);
+      router.push(
+        `/bookproject/${router.query.screenName}?uid=${authUser.authUser?.uid}`
+      );
     });
   }
   useEffect(() => {
@@ -108,7 +112,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
                   deleteData(mydata).then((data) => {
                     alert("삭제되었습니다.");
                     router.push(
-                      `/${router.query.screenName}?uid=${authUser.authUser?.uid}`
+                      `/bookproject/${router.query.screenName}?uid=${authUser.authUser?.uid}`
                     );
                   });
                 }}

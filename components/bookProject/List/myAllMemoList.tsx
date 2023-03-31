@@ -30,7 +30,7 @@ const list = ({ memodata, router, memotitle }: Props) => {
             return (
               <Link
                 href={{
-                  pathname: `/${router?.screenName}"/mybook/${title}`,
+                  pathname: `/bookproject/${router?.screenName}"/mybook/${title}`,
                   query: {
                     isbn: memo.isbn,
                     isbn13: memo.isbn13 ? memo.isbn13 : "null",

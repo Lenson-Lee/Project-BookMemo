@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
-import ServiceLayout from "@/components/service_layout";
+import ServiceLayout from "@/components/bookProject/service_layout";
 import { useRouter } from "next/router";
-import BookInfo from "@/components/Info/BookInfo";
+import BookInfo from "@/components/bookProject/Info/BookInfo";
 import {
   dehydrate,
   QueryClient,
@@ -9,18 +9,17 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
-import { getMemberMemoList } from "@/pages/api/membermemo/member.memo.get";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getSimilarList } from "@/pages/api/search/search.similar.book";
+import { getSimilarList } from "@/pages/api/bookproject/search/search.similar.book";
 import Link from "next/link";
 import Image from "next/image";
 import react, { useState, useEffect } from "react";
 
 import { useAuth } from "@/contexts/auth_user.context";
-import { getComment } from "@/pages/api/comment/comment.get";
-import Sample from "@/components/List/commentSampleList";
+import { getComment } from "@/pages/api/bookproject/comment/comment.get";
+import Sample from "@/components/bookProject/List/comment/commentSampleList";
 //[검색어] 를 받기 위해 getServerSideProps 사용
 // url에 넘어온 쿼리를 받는 방식은 getStaticProps에서 hook(useRouter)을 사용할 수 없어 실패
 
@@ -44,7 +43,6 @@ function SearchQuery({ similar, commentDB }: Props) {
   const settings = {
     dots: false,
     infinite: false,
-    // draggable: false,
     arrows: true,
     speed: 300,
     slidesToShow: 3,
@@ -88,22 +86,18 @@ function SearchQuery({ similar, commentDB }: Props) {
   /** useQuery로 값 추가되었을 때 갱신 */
   const queryFn = async () => {
     const res = await fetch(
-      `/api/comment/comment.query.get?isbn=${querydata?.isbn}`
+      `/api/bookproject/comment/comment.query.get?isbn=${querydata?.isbn}`
     );
     const commentlist = await res.json();
     return commentlist.data;
   };
-
   const { data } = useQuery(["comment"], queryFn, {
-    staleTime: 10,
+    staleTime: 1000,
   });
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   /** 기록 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
-    const response = await fetch(`/api/comment/comment.add`, {
+    const response = await fetch(`/api/bookproject/comment/comment.add`, {
       method: "POST",
       body: JSON.stringify(addData),
       headers: {
@@ -123,7 +117,7 @@ function SearchQuery({ similar, commentDB }: Props) {
 
   /** 좋아요 클릭 이벤트 */
   async function likeQuery(likeData: LikeType) {
-    const response = await fetch(`/api/comment/comment.like.add`, {
+    const response = await fetch(`/api/bookproject/comment/comment.like.add`, {
       method: "POST",
       body: JSON.stringify(likeData),
       headers: {
@@ -297,7 +291,7 @@ function SearchQuery({ similar, commentDB }: Props) {
           {similar.similar.item.map((book: any, index: number) => (
             <Link
               href={{
-                pathname: `/search/isbn=${book.isbn}&isbn13=${
+                pathname: `/bookproject/search/isbn=${book.isbn}&isbn13=${
                   book.isbn13 ? book.isbn13 : "null"
                 }/detail`,
                 query: { data: JSON.stringify(book) },
@@ -344,6 +338,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   //해당 책 모든 유저 코멘트의 기록(react-query)
   await queryClient.prefetchQuery(["comment"], () => getComment(isbn));
+
   const comment = JSON.parse(JSON.stringify(dehydrate(queryClient))).queries[0]
     .state.data.data.document;
 

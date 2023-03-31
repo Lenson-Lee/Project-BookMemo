@@ -37,7 +37,7 @@ const MyBookList = () => {
       size: size,
     };
 
-    const response = await fetch("/api/mybook/mybook.get", {
+    const response = await fetch("/api/bookproject/mybook/mybook.get", {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -166,7 +166,7 @@ const MyBookList = () => {
         {dataList.map((book: any, index: number) => (
           <Link
             href={{
-              pathname: `/${authUser?.email?.replace(
+              pathname: `/bookproject/${authUser?.email?.replace(
                 "@gmail.com",
                 ""
               )}/mybook/${book.title}`,

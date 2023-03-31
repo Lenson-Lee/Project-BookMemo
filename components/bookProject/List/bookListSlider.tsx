@@ -29,7 +29,7 @@ const BookListSlider = ({ data }: Props) => {
               //   book.isbn13 ? book.isbn13 : "null"
               // }/detail`}
               href={{
-                pathname: `/search/isbn=${book.isbn}&isbn13=${
+                pathname: `/bookproject/search/isbn=${book.isbn}&isbn13=${
                   book.isbn13 ? book.isbn13 : "null"
                 }/detail`,
                 query: { data: JSON.stringify(book) },
