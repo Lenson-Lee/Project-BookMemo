@@ -28,6 +28,7 @@ interface Props {
   commentDB: any;
 }
 interface AddType {
+  title: string;
   userId: string;
   displayName: string;
   isbn: string;
@@ -200,6 +201,7 @@ function SearchQuery({ similar, commentDB }: Props) {
                 <button
                   onClick={() => {
                     postMutation.mutate({
+                      title: querydata.title,
                       userId: authUser.authUser?.uid ?? "undefine",
                       isbn: querydata.isbn,
                       isbn13: querydata.isbn_13,
