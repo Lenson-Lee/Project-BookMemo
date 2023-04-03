@@ -50,15 +50,13 @@ model Comment {
   userId      String
   isbn        String
   isbn13      String?
-  title       String?
   score       Int
   createdAt   DateTime @default(now())
   content     String?  @db.MediumText
   role        Role     @default(USER)
   displayName String
   like        Int      @default(0)
-
-  @@index([userId], map: "Comment_userId_fkey")
+  title       String
 }
 
 enum Role {

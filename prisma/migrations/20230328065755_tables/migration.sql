@@ -8,7 +8,7 @@ CREATE TABLE `Comment` (
     `title` VARCHAR(191) NOT NULL,
     `isbn` VARCHAR(191) NOT NULL,
     `isbn13` VARCHAR(191) NULL,
-    `like` INTEGER NOT NULL,
+    `like` INTEGER NOT NULL DEFAULT 0, 
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `content` MEDIUMTEXT NULL,
 

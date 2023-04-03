@@ -10,7 +10,6 @@ export default function List({ data }: Props) {
 }
 //
 export async function getComment(req: any) {
-  console.log(req);
   const document = await prisma.comment.findMany({
     where: {
       isbn: req,
