@@ -16,7 +16,6 @@ export async function getComment() {
   });
 
   //해당 책 코멘트별 책 제목 조회
-
   const data = { document };
   console.log(">comment.most.get 끝 --END");
   return { data };

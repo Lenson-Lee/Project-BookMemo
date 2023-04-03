@@ -8,8 +8,9 @@ interface Props {
 export default function List({ data }: Props) {
   return { data };
 }
+//
 export async function getComment(req: any) {
-  // console.log("DB : ", req);
+  console.log(req);
   const document = await prisma.comment.findMany({
     where: {
       isbn: req,

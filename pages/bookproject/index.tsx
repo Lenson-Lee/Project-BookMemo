@@ -2,7 +2,7 @@ import ServiceLayout from "@/components/bookProject/service_layout";
 import type { GetStaticProps } from "next";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getBookList } from "@/pages/api/bookproject/book.list";
-import { getComment } from "../api/bookproject/comment/comment.most.get";
+import { getComment } from "@/pages/api/bookproject/comment/comment.most.get";
 import BookListSlider from "@/components/bookProject/List/bookListSlider";
 import CommentSlider from "@/components/bookProject/List/comment/commentListSlider";
 const provider = new GoogleAuthProvider();
@@ -14,7 +14,7 @@ interface Props {
   comment: any;
 }
 
-function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
+function Home({ Bestseller, ItemNewSpecial, ItemNewAll }: Props) {
   return (
     <>
       <ServiceLayout>
@@ -32,7 +32,7 @@ function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
               이런 감상평이 있는 책은 어때요?
             </p>
           </div>
-          <CommentSlider data={JSON.parse(comment).data.document} />
+          {/* <CommentSlider data={JSON.parse(comment).data.document} /> */}
         </div>
         <div className="mt-10 mb-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
           <div className="flex gap-x-5 items-end mb-8">
@@ -57,10 +57,10 @@ export const getStaticProps: GetStaticProps = async () => {
   const ItemNewSpecial = await getBookList("ItemNewSpecial");
   const Bestseller = await getBookList("Bestseller");
   const ItemNewAll = await getBookList("ItemNewAll");
-  const Comment = await getComment();
-  const comment = JSON.stringify(Comment);
+  // const Comment = await getComment();
+  // const comment = JSON.stringify(Comment);
   return {
-    props: { ItemNewSpecial, Bestseller, ItemNewAll, comment },
+    props: { ItemNewSpecial, Bestseller, ItemNewAll },
   };
 };
 export default Home;
