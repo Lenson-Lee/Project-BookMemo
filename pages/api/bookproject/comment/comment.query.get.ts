@@ -16,5 +16,5 @@ export default async function handler(req: any, res: any) {
   });
 
   console.log(">comment.get useQuery로 책의 메모리스트 불러오기 끝 --END");
-  res.status(200).json({ message: "testget 성공", data: list });
+  res.status(200).json({ data: list });
 }

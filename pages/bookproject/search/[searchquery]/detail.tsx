@@ -25,7 +25,7 @@ import Sample from "@/components/bookProject/List/comment/commentSampleList";
 
 interface Props {
   similar: any;
-  // commentDB: any;
+  commentDB: any;
 }
 interface AddType {
   title: string;
@@ -40,7 +40,7 @@ interface LikeType {
   id: number;
   like: number;
 }
-function SearchQuery({ similar }: Props) {
+function SearchQuery({ similar, commentDB }: Props) {
   const settings = {
     dots: false,
     infinite: false,
@@ -62,39 +62,21 @@ function SearchQuery({ similar }: Props) {
   const [comment, setComment] = useState<string>("");
   const [score, setScore] = useState<number>(0);
 
-  /** 별점 클릭 UI */
-  const [star, setStar] = useState([false, false, false, false, false]);
-
-  /** 별 클릭 시 해당 갯수만큼 star 참/거짓 변경 */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const selectScore = (target: any) => {
-    /** score의 갯수에 따라 숫자 변경 */
-    let count = 0;
-    let click = [...star];
-    for (let i = 0; i < 5; i++) {
-      click[i] = i < target ? true : false;
-      if (i < target) {
-        click[i] = true;
-        count++;
-      } else {
-        click[i] = false;
-      }
-    }
-    setStar(click);
-    setScore(count);
-  };
-
   /** useQuery로 값 추가되었을 때 갱신 */
-  // const queryFn = async () => {
-  //   const res = await fetch(
-  //     `/api/bookproject/comment/comment.query.get?isbn=${querydata?.isbn}`
-  //   );
-  //   const commentlist = await res.json();
-  //   return commentlist.data;
-  // };
-  // const { data } = useQuery(["comment"], queryFn, {
-  //   staleTime: 1000,
-  // });
+  const queryFn = async () => {
+    const res = await fetch(
+      `/api/bookproject/comment/comment.query.get?isbn=${querydata?.isbn}`
+    );
+    const commentlist = await res.json();
+    return commentlist.data;
+  };
+  const { data } = useQuery(["comment"], queryFn, {
+    staleTime: 1000,
+  });
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   /** 기록 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
@@ -194,7 +176,6 @@ function SearchQuery({ similar }: Props) {
                 <button
                   onClick={() => {
                     setOpen(false);
-                    setStar([false, false, false, false, false]);
                     setComment("");
                   }}
                   className=" bg-gray-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
@@ -204,15 +185,15 @@ function SearchQuery({ similar }: Props) {
 
                 <button
                   onClick={() => {
-                    // postMutation.mutate({
-                    //   title: querydata.title,
-                    //   userId: authUser.authUser?.uid ?? "undefine",
-                    //   isbn: querydata.isbn,
-                    //   isbn13: querydata.isbn_13,
-                    //   content: comment,
-                    //   score: score,
-                    //   displayName: authUser.authUser?.displayName ?? "홍길동",
-                    // });
+                    postMutation.mutate({
+                      title: querydata.title,
+                      userId: authUser.authUser?.uid ?? "undefine",
+                      isbn: querydata.isbn,
+                      isbn13: querydata.isbn_13,
+                      content: comment,
+                      score: score,
+                      displayName: authUser.authUser?.displayName ?? "홍길동",
+                    });
                   }}
                   className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                 >
@@ -222,22 +203,22 @@ function SearchQuery({ similar }: Props) {
             </div>
           </div>
         )}
-        {/* <Slider {...settings}>
+        <Slider {...settings}>
           {data &&
             data.map((item: any, index: number) => {
               return (
                 <div key={item.id + index} className="mt-2">
-                  <div className="mx-2 p-5 rounded-lg bg-gray-100 h-56"> */}
-        {/* profile */}
-        {/* <div className="flex justify-between items-center border-b pb-4 mb-4">
+                  <div className="mx-2 p-5 rounded-lg bg-gray-100 h-56">
+                    {/* profile */}
+                    <div className="flex justify-between items-center border-b pb-4 mb-4">
                       <div className="flex gap-x-2 items-center">
                         <div className="w-8 h-8 rounded-full bg-gray-700 border" />
                         <p className="text-lg font-medium">
                           {item?.displayName}
                         </p>
-                      </div> */}
-        {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}
-        {/* <button
+                      </div>
+                      {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}
+                      <button
                         onClick={() => {
                           likeMutation.mutate({
                             id: item.id,
@@ -257,15 +238,15 @@ function SearchQuery({ similar }: Props) {
                         <p>좋아요</p>
                         <p>{item.like}</p>
                       </button>
-                    </div> */}
-        {/* content */}
-        {/* <div className="line-clamp-5">{item.content}</div>
+                    </div>
+                    {/* content */}
+                    <div className="line-clamp-5">{item.content}</div>
                   </div>
                 </div>
               );
             })}
         </Slider>
-        {data?.length < 1 && <Sample />} */}
+        {data?.length < 1 && <Sample />}
       </div>
       <div className="bg-white w-full py-10 px-20 mt-10 rounded-xl">
         <div className="flex gap-x-5 items-end mb-8 ">
@@ -325,12 +306,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const similar = await getSimilarList(JSON.parse(data as string).categoryId);
 
   //해당 책 모든 유저 코멘트의 기록(react-query)
-  // await queryClient.prefetchQuery(["comment"], () => getComment(isbn));
+  await queryClient.prefetchQuery(["comment"], () => getComment(isbn));
 
-  // const comment = JSON.parse(JSON.stringify(dehydrate(queryClient))).queries[0]
-  //   .state.data.data.document;
+  const comment = JSON.parse(JSON.stringify(dehydrate(queryClient))).queries[0]
+    .state.data.data.document;
 
   return {
-    props: { similar: similar },
+    props: { similar: similar, commentDB: comment },
   };
 };
