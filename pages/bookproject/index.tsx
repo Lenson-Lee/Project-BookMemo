@@ -17,9 +17,7 @@ interface Props {
 
 function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
   const data = JSON.parse(comment).data.document;
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   return (
     <>
       <ServiceLayout>
@@ -37,7 +35,7 @@ function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
               이런 감상평이 있는 책은 어때요?
             </p>
           </div>
-          {/* <CommentSlider data={data} /> */}
+          <CommentSlider data={data} />
         </div>
         <div className="mt-10 mb-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
           <div className="flex gap-x-5 items-end mb-8">

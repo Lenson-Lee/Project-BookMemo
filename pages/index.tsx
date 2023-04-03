@@ -5,32 +5,32 @@ import { getBookList } from "@/pages/api/bookproject/book.list";
 import BookListSlider from "@/components/bookProject/List/bookListSlider";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 const provider = new GoogleAuthProvider();
 
-interface Props {
-  ItemNewSpecial: {}; //주목할만한 신간
-  Bestseller: {}; //베스트셀러
-  ItemNewAll: {}; //신간 전체
-  // ItemEditorChoice: {}; //편집자 추천 > 카테고리로만 조회 가능이 무슨 뜻?
-}
-
-function Home({ Bestseller, ItemNewSpecial, ItemNewAll }: Props) {
+function Home() {
   return (
     <>
-      <ServiceLayout>
-        <Link href="/bookproject">이동하기</Link>
-      </ServiceLayout>
+      <Link href="/bookproject" className=" w-full">
+        <div className="mt-40 flex-col flex justify-center items-center">
+          <Image
+            width={500}
+            height={500}
+            src={"/images/bear.jpg"}
+            alt="갓생걸"
+            className="w-1/3 h-1/3 object-cover object-center"
+          />
+          <p className="text-2xl">
+            약간의 공사중입니다. 통행에 불편을 드려 죄송합니다🙏🙏
+          </p>
+          <p className="mt-2 text-2xl p-4 rounded-full bg-yellow-400 text-white font-semibold">
+            클릭시 이동합니다 💨
+          </p>
+        </div>
+      </Link>
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const ItemNewSpecial = await getBookList("ItemNewSpecial");
-  const Bestseller = await getBookList("Bestseller");
-  const ItemNewAll = await getBookList("ItemNewAll");
-  return {
-    props: { ItemNewSpecial, Bestseller, ItemNewAll },
-  };
-};
 export default Home;
