@@ -161,8 +161,8 @@ function SearchQuery({ similar, commentDB }: Props) {
           </div>
         </div>
         {open && (
-          <div className="fixed z-50 bg-black/25 left-0 right-0 top-0 h-screen">
-            <div className="max-w-screen-md mx-auto mt-44 bg-white border rounded-xl pt-16 pb-10 px-20">
+          <div className="fixed bg-black/25 z-10 left-0 right-0 top-0 h-screen">
+            <div className="max-w-screen-lg mx-auto mt-5 lg:mt-44 bg-white shadow-lg border rounded-xl pt-16 px-6 pb-20 lg:pb-10 lg:px-20">
               <div className="text-xl font-semibold">{querydata.title}</div>
               <div className="mt-2 flex gap-x-2">
                 <div className="text-sm">{querydata.author}</div>
