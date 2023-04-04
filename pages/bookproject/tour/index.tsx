@@ -40,6 +40,15 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
   const mysettings = {
     dots: true,
@@ -47,6 +56,15 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
     speed: 500,
     slidesToShow: length,
     slidesToScroll: length,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
   return (
     <ServiceLayout>
@@ -54,15 +72,17 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
 
       {/* 가장 좋아하는 장르 순위 */}
       {authUser && (
-        <div className=" bg-white w-full h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end mb-8">
-            <div className="text-xl font-semibold flex gap-x-2">
+        <div className="bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end mb-8">
+            <div className="text-xl font-semibold lg:flex gap-x-2">
               {authUser?.displayName}님이 가장 좋아하는
-              <p className="text-yellow-400"> {categoryData[0]?.field}</p> 장르
-              Best
+              <div className="flex gap-x-2">
+                <p className="text-yellow-400"> {categoryData[0]?.field}</p>
+                <p>장르 Best</p>
+              </div>
             </div>
-            <p className="text-gray-500 text-sm">
-              가장 많이 저장한 장르의 책을 유저들 추천 순으로 소개할게요
+            <p className="mt-2 lg:mt-0 text-gray-500 text-sm">
+              유저들의 저장순, 추천순으로 소개할게요
             </p>
           </div>
           <Slider {...mysettings}>
@@ -84,9 +104,9 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                   src={category.api.cover}
                   width={500}
                   height={500}
-                  className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
+                  className="object-cover object-center border bg-gray-100 w-36 h-44 lg:w-44 lg:h-60 mx-auto"
                 />
-                <div className="w-44 mt-4 mx-auto">
+                <div className="w-36 lg:w-44 mt-4 mx-auto">
                   <div className="text-sm line-clamp-1 bg-yellow-50 text-yellow-400 px-2 py-1 rounded-full flex gap-x-1 items-center w-fit">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -116,8 +136,8 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
       )}
 
       {/* 저장순 */}
-      <div className="mt-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-        <div className="flex gap-x-5 items-end mb-8">
+      <div className="mt-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+        <div className="lg:flex gap-x-5 items-end mb-8">
           <div className="text-xl font-semibold ">
             가장 많이 읽은 바로 그 책
           </div>
@@ -142,7 +162,7 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                 src={rank.cover}
                 width={500}
                 height={500}
-                className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
+                className="object-cover object-center border bg-gray-100 w-36 h-44 lg:w-44 lg:h-60 mx-auto"
               />
               <div className="w-44 mt-4 mx-auto">
                 <div className="text-base line-clamp-1 font-semibold">
@@ -156,8 +176,8 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
       </div>
 
       {/* 추천순 */}
-      <div className="mt-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-        <div className="flex gap-x-5 items-end mb-8">
+      <div className="mt-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+        <div className="lg:flex gap-x-5 items-end mb-8">
           <div className="text-xl font-semibold ">모두가 추천하는 그 책</div>
           <p className="text-gray-500 text-sm">
             유저들이 별점을 가장 높게 준 책, 믿고 읽어보세요!
@@ -180,9 +200,9 @@ function Tour({ rankbook, scorebook, categorybook }: Props) {
                 src={score.api.cover}
                 width={500}
                 height={500}
-                className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
+                className="object-cover object-center border bg-gray-100 mx-auto w-36 h-44 lg:w-44 lg:h-60"
               />
-              <div className="w-44 mt-4 mx-auto">
+              <div className="w-36 lg:w-44  mt-4 mx-auto">
                 <div className="text-sm line-clamp-1 bg-yellow-50 text-yellow-400 px-2 py-1 rounded-full flex gap-x-1 items-center w-fit">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

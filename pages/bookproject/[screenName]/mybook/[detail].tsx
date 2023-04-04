@@ -177,12 +177,11 @@ function DetailQuery({ serverdata, userData }: Props) {
 
   return (
     <ServiceLayout>
-      <div className="bg-white w-full py-10 mt-20 px-20 rounded-xl">
+      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
         <BookInfo state="mybook" apidata={apidata} mydata={mydata}></BookInfo>
       </div>
       {/*  */}
-
-      <div className="bg-white w-full py-10 mt-10 px-20 rounded-xl">
+      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
         <div className="flex justify-between">
           <div className="text-xl font-semibold">나의 기록</div>
           <button
@@ -195,13 +194,13 @@ function DetailQuery({ serverdata, userData }: Props) {
           </button>
           {open && (
             <div className="fixed bg-black/25 left-0 right-0 top-0 h-screen">
-              <div className="max-w-screen-lg mx-auto mt-44 bg-white border rounded-xl pt-16 pb-10 px-20">
+              <div className="max-w-screen-lg mx-auto mt-20 lg:mt-44 bg-white border rounded-xl pt-16 px-6 pb-20 lg:pb-10 lg:px-20">
                 <div className="text-xl font-semibold">{title}</div>
-                <div className="mt-2 flex gap-x-2">
+                <div className="mt-2 lg:flex gap-x-2">
                   <div className="text-sm">{author}</div>
                   <div className="text-sm">{categoryName}</div>
                 </div>
-                <div className="mt-5 flex gap-x-2 items-center text-sm">
+                <div className="mt-5 flex gap-x-2 items-center text-xs lg:text-sm">
                   <label htmlFor="keyword">키워드 추가</label>
                   <input
                     name="keyword"
@@ -234,7 +233,7 @@ function DetailQuery({ serverdata, userData }: Props) {
                     setMemo(e.currentTarget.value);
                   }}
                   defaultValue={targetMemo ? targetMemo.content : ""}
-                  className="mt-10 outline-none resize-none w-full h-96 bg-gray-100 rounded-lg p-5"
+                  className="mt-4 lg:mt-10 outline-none resize-none w-full h-96 bg-gray-100 rounded-lg p-5"
                 />
                 {/* button zone */}
                 <div className="mt-5 flex gap-x-4 justify-center">
@@ -246,7 +245,7 @@ function DetailQuery({ serverdata, userData }: Props) {
                       setKeywordArr([]);
                       setTargetMemo(null);
                     }}
-                    className=" bg-gray-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
+                    className=" bg-gray-300 text-white font-semibold px-4 py-1 rounded-lg text-base lg:text-lg"
                   >
                     취소하기
                   </button>
@@ -272,7 +271,7 @@ function DetailQuery({ serverdata, userData }: Props) {
                         });
                       }
                     }}
-                    className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
+                    className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-base lg:text-lg"
                   >
                     {targetMemo ? "수정하기" : "저장하기"}
                   </button>
@@ -288,7 +287,7 @@ function DetailQuery({ serverdata, userData }: Props) {
             return (
               <div
                 key={item.createdAt + index}
-                className="bg-gray-50 rounded-lg w-full p-10"
+                className="bg-gray-50 rounded-lg w-full p-6 lg:p-10"
               >
                 <div className="flex justify-between">
                   <div className="text-sm text-gray-500">

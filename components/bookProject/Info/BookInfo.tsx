@@ -79,15 +79,15 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
   }, [router.isReady, router.query.screenName]);
   return (
     <>
-      <div className="flex gap-x-20">
+      <div className="lg:flex gap-x-20">
         <Image
           alt="책표지"
           width={500}
           height={500}
           src={apidata?.cover}
-          className="object-cover object-center border bg-gray-100 w-56 mx-auto h-72"
+          className="object-cover object-center border bg-gray-100 w-48 h-64 lg:w-56 lg:h-72 mx-auto lg:mx-0"
         />
-        <div className="w-4/5 relative">
+        <div className="mt-5 lg:mt-0 w-full lg:w-4/5 relative">
           {open && (
             <div className="mt-5 absolute w-full flex justify-end">
               <MyBookInfo
@@ -98,7 +98,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
             </div>
           )}
           {state === "mybook" ? (
-            <div className="flex justify-end gap-x-4">
+            <div className="flex justify-center lg:justify-end gap-x-4">
               <button
                 onClick={(e) => {
                   setOpen(!open);
@@ -122,15 +122,15 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
               </button>
             </div>
           ) : null}
-          <div className="h-4/5">
+          <div className="my-5 text-sm lg:text-base lg:my-0 h-4/5">
             <p className="text-xl font-semibold mb-4">{apidata?.title}</p>
             <p className="my-1 text-gray-500 font-light">
               {apidata?.categoryName}
             </p>
-            <div className="flex items-center gap-x-4 font-light divide-x-2 divide-gray-300 mb-5">
+            <div className="lg:flex items-center gap-x-4 font-light lg:divide-x-2 divide-gray-300 mb-5">
               <p>{apidata?.author}</p>
-              <div className="pl-4 flex items-center">
-                <p className="mr-3">평균평점</p>
+              <div className="mt-2 lg:mt-0 lg:pl-4 flex items-center">
+                <p className="lg:mr-3">평균평점</p>
                 <div className="text-yellow-400 flex">
                   <svg
                     viewBox="0 0 20 20"
@@ -150,7 +150,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
             <div className="line-clamp-3 font-base">{apidata?.description}</div>
             <Link
               href={apidata ? apidata?.link : ""}
-              className="text-yellow-400 font-base text-sm cursor-pointer flex justify-end"
+              className="mt-2 lg:mt-0 text-yellow-400 font-base text-sm cursor-pointer flex justify-end"
             >
               자세히 보기
             </Link>

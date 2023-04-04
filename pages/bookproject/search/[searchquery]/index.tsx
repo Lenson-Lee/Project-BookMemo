@@ -19,7 +19,7 @@ function SearchQuery({ target, result }: Props) {
         <div className="text-yellow-400">{target}</div>
         <div className="">에 관한 검색결과입니다.</div>
       </div>
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-2 gap-y-2 lg:grid-cols-5">
         {result?.map((book: any) => (
           <Link
             href={{

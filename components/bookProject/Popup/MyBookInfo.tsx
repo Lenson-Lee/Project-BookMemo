@@ -123,13 +123,13 @@ const MyBookInfo = ({ getData, response, mydata }: Props) => {
           </button>
         </div>
         <div className="relative border-t pt-4 space-y-4 mb-6">
-          <div className="flex text-sm gap-x-2">
+          <div className="lg:flex text-sm gap-x-2">
             <div className="flex items-center justify-center">
               <DatePicker getStart={getStart} getEnd state="start" />
               <p>부터</p>
             </div>
             {bookState === "finish" ? (
-              <div className="flex items-center justify-center">
+              <div className="mt-2 lg:mt-0 flex items-center justify-center">
                 <DatePicker getStart getEnd={getEnd} state="end" />
                 <p>까지</p>
               </div>

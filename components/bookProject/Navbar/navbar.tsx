@@ -23,7 +23,7 @@ const navbar = function () {
         </p>
       </button>
       <button
-        className="border rounded-lg text-xs text-gray-600 px-2 py-1 h-fit cursor:pointer"
+        className="hidden lg:block border rounded-lg text-xs text-gray-600 px-2 py-1 h-fit cursor:pointer"
         onClick={signOut}
       >
         로그아웃
@@ -34,14 +34,14 @@ const navbar = function () {
   const logInBtn = (
     <>
       <button
-        className="rounded-lg px-3 py-1 font-semibold bg-yellow-300 hover:bg-yellow-400 text-white"
+        className="rounded-lg px-2 lg:px-3 py-1 text-sm lg:text-base font-semibold bg-yellow-300 hover:bg-yellow-400 text-white"
         onClick={signInWithGoogle}
       >
         로그인
       </button>
       <button
         onClick={signInWithGoogle}
-        className="rounded-lg px-3 py-1 font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gray-400"
+        className="rounded-lg px-2 lg:px-3 py-1 text-sm lg:text-base font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gray-400"
       >
         회원가입
       </button>
@@ -53,7 +53,7 @@ const navbar = function () {
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 py-5">
         <Link
           href="/bookproject"
-          className="font-dangam flex items-start justify-center text-center text-3xl font-semibold text-yellow-300"
+          className="font-dangam flex items-start justify-center text-center text-lg lg:text-3xl font-semibold text-yellow-300"
         >
           My Book{" "}
           <svg
@@ -71,7 +71,7 @@ const navbar = function () {
             />
           </svg>
         </Link>
-        <div className="flex gap-x-16">
+        <div className="hidden lg:flex lg:text-lg lg:gap-x-16">
           <Link
             href={{
               pathname: `/bookproject/${authUser?.email?.replace(
@@ -80,7 +80,7 @@ const navbar = function () {
               )}`,
               query: { uid: authUser?.uid },
             }}
-            className="text-lg font-semibold"
+            className="font-semibold"
           >
             나의 서재
           </Link>
@@ -89,12 +89,14 @@ const navbar = function () {
               pathname: "/bookproject/tour",
               query: { uid: authUser?.uid },
             }}
-            className="text-lg font-semibold"
+            className="font-semibold"
           >
             둘러보기
           </Link>
         </div>
-        <SearchBar />
+        <div className="hidden lg:block w-2/5">
+          <SearchBar />
+        </div>
         <div className="flex items-center gap-x-2">
           {loading || authUser === null ? logInBtn : logOutBtn}
           {/* <div className="border border-gray-300 rounded-lg px-3 py-1 font-semibold">

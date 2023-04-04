@@ -42,12 +42,21 @@ interface LikeType {
 }
 function SearchQuery({ similar, commentDB }: Props) {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
-    arrows: true,
+    arrows: false,
     speed: 300,
     slidesToShow: 3,
     slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const authUser = useAuth();
@@ -126,13 +135,11 @@ function SearchQuery({ similar, commentDB }: Props) {
   //
   return (
     <ServiceLayout>
-      <div className="bg-white w-full py-10 mt-20 rounded-xl">
-        <div className="mx-20">
-          <BookInfo state="search" apidata={querydata} mydata></BookInfo>
-        </div>
+      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
+        <BookInfo state="search" apidata={querydata} mydata></BookInfo>
       </div>
-      <div className="bg-white w-full py-10 px-20 mt-10 rounded-xl">
-        <div className="flex justify-between items-center">
+      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
+        <div className="lg:flex justify-between items-center">
           <p className="text-xl font-semibold mb-4">독자들의 코멘트</p>
           <div className="flex gap-x-2">
             <button
@@ -248,15 +255,15 @@ function SearchQuery({ similar, commentDB }: Props) {
         </Slider>
         {data?.length < 1 && <Sample />}
       </div>
-      <div className="bg-white w-full py-10 px-20 mt-10 rounded-xl">
-        <div className="flex gap-x-5 items-end mb-8 ">
+      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
+        <div className="lg:flex gap-x-5 items-end mb-8 ">
           <p className="text-xl font-semibold">이런 책은 어떠세요?</p>
 
           <p className="text-gray-500 text-sm">
             유사한 카테고리의 책을 엄선해 봤어요
           </p>
         </div>
-        <div className="grid grid-cols-5 gap-x-2 gap-y-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-2 gap-y-8">
           {similar.similar.item.map((book: any, index: number) => (
             <Link
               href={{
@@ -273,9 +280,9 @@ function SearchQuery({ similar, commentDB }: Props) {
                 src={book.cover}
                 width={500}
                 height={500}
-                className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
+                className="object-cover object-center border bg-gray-100 mx-auto w-36 h-44 lg:w-44 lg:h-60"
               ></Image>
-              <div className="w-44 mt-4 mx-auto">
+              <div className="w-36 lg:w-44 mt-4 mx-auto">
                 <div className="line-clamp-2 text-base font-medium">
                   {book.title}
                 </div>

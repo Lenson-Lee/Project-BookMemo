@@ -24,7 +24,7 @@ function Home() {
           <p className="text-2xl">
             약간의 공사중입니다. 통행에 불편을 드려 죄송합니다🙏🙏
           </p>
-          <p className="mt-2 text-2xl p-4 rounded-full bg-yellow-400 text-white font-semibold">
+          <p className="mt-4 text-2xl p-3 rounded-full bg-yellow-400 text-white font-semibold">
             클릭시 이동합니다 💨
           </p>
         </div>

@@ -7,7 +7,7 @@ const SearchBar = () => {
     <form
       action={`/bookproject/search/${searchquery}`}
       method="post"
-      className="w-2/5 rounded-full px-4 border-2 border-yellow-400 flex items-center justify-between"
+      className="w-full rounded-full px-4 border-2 border-yellow-400 bg-white flex items-center justify-between"
     >
       {/* <div className="w-2/5 rounded-full px-4 border-2 border-yellow-400 flex items-center justify-between"> */}
       <input

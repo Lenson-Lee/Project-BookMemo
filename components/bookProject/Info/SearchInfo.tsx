@@ -78,7 +78,7 @@ const SearchInfo = ({ data }: Props) => {
   }, [bookState]);
   return (
     <div className="">
-      <div className="flex gap-x-4">
+      <div className="flex gap-x-4 justify-center lg:justify-start">
         <button
           onClick={() => {
             if (uid !== "undefine") {
@@ -87,7 +87,7 @@ const SearchInfo = ({ data }: Props) => {
               alert("로그인 후 이용해주세요💦");
             }
           }}
-          className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
+          className="bg-gray-100 text-gray-500 text-md lg:text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ const SearchInfo = ({ data }: Props) => {
           onClick={() => {
             setOpen(!open);
           }}
-          className="relative bg-yellow-300 text-white text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
+          className="relative bg-yellow-300 text-white text-md lg:text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

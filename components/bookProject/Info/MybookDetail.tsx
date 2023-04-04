@@ -23,9 +23,9 @@ const MybookDetail = ({ mydata }: Props) => {
   };
 
   return (
-    <div className="bg-gray-50 text-gray-600 p-5 rounded-lg flex gap-x-10 ">
-      <div className="">{state()}</div>
-      <div className="flex  gap-x-3 items-center">
+    <div className="bg-gray-50 text-gray-600 p-5 rounded-lg lg:flex gap-x-10 ">
+      <div className="text-center lg:text-start font-semibold">{state()}</div>
+      <div className="mt-2 lg:mt-0 flex gap-x-3 items-center">
         <p className="">나의 별점</p>
         <div className="text-yellow-400 flex">
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -38,7 +38,7 @@ const MybookDetail = ({ mydata }: Props) => {
           <p>{mydata.score + "점"}</p>
         </div>
       </div>
-      <div className="flex  gap-x-3">
+      <div className="flex gap-x-3">
         <p className="">읽은 기간</p>
         <div className="flex gap-x-2">
           {mydata.start ? (

@@ -77,20 +77,20 @@ function Mybook({ alldata }: Props) {
     <ServiceLayout>
       <p className="px-4 mt-10 mb-5 text-lg font-semibold">나의 서재</p>
 
-      <div className="flex gap-x-4 mb-4">
-        <div className="bg-white w-1/2 py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end">
+      <div className="lg:flex gap-x-4 mb-4">
+        <div className="bg-white w-full lg:w-1/2 p-6 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end">
             <p className="text-xl font-semibold">많이 읽은 장르</p>
             <p className="text-gray-500 text-xs">
               다 읽은 책, 읽고있는 책 기준
             </p>
           </div>
-          <div className="w-4/5 mx-auto mt-12 flex items-center">
+          <div className="w-4/5 mx-auto mt-6 lg:mt-12 flex items-center">
             <Chart count={alldata.data.count.ctgcount} />
           </div>
         </div>
-        <div className="bg-white w-1/2 h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end">
+        <div className="mt-4 lg:mt-0 bg-white w-full lg:w-1/2 p-6 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end">
             <p className="text-xl font-semibold">이달의 기록현황</p>
             {monthMemocount > 0 ? (
               <p className="text-gray-500 text-xs">
@@ -98,16 +98,16 @@ function Mybook({ alldata }: Props) {
               </p>
             ) : null}
           </div>
-          <div className="w-2/3 mx-auto mt-10">
+          <div className="w-full lg:w-2/3 mx-auto mt-10">
             <BarChart count={monthdata} />
           </div>
         </div>
       </div>
-      <div className="flex gap-x-4">
-        <div className="bg-white w-full h-fit py-10 px-10 rounded-xl border">
+      <div className="lg:flex gap-x-4">
+        <div className="bg-white w-full h-fit p-6 lg:py-10 lg:px-10 rounded-xl border">
           <MyBookList />
         </div>
-        <div className="w-1/3 space-y-4">
+        <div className="mt-4 lg:mt-0 w-full lg:w-1/3 space-y-4">
           <div className="h-fit p-10 bg-white rounded-xl border">
             <MyAllKeywordList keywordList={uniqueKwList} />
           </div>

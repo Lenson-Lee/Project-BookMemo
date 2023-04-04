@@ -12,12 +12,21 @@ interface LikeType {
 
 const CommentSlider = ({ data }: Props) => {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
-    arrows: true,
+    arrows: false,
     speed: 300,
     slidesToShow: 3,
     slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   /** 좋아요 클릭 이벤트 */

@@ -106,9 +106,11 @@ const MyBookList = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-end">
-          <div className="text-xl font-semibold mr-8">내가 저장한 책</div>
+      <div className="lg:flex items-center justify-between mb-4">
+        <div className="lg:flex items-end mb-4 lg:mb-0 ">
+          <div className="text-xl font-semibold mr-8 mb-2 lg:mb-0 ">
+            내가 저장한 책
+          </div>
           <button
             onClick={() => {
               setState("finish");
@@ -144,25 +146,27 @@ const MyBookList = () => {
             찜한 책
           </button>
         </div>
-        <select
-          name="view"
-          value={size}
-          onChange={(e) => {
-            setSize(Number(e.target.value));
-          }}
-          className="px-3 py-2 border rounded-lg text-sm text-gray-600 focus:border-yellow-400"
-        >
-          <option value={4}>4개씩 보기</option>
-          <option value={8}>8개씩 보기</option>
-          <option value={12}>12개씩 보기</option>
-        </select>
+        <div className="flex justify-end lg:block">
+          <select
+            name="view"
+            value={size}
+            onChange={(e) => {
+              setSize(Number(e.target.value));
+            }}
+            className="px-3 py-2 border rounded-lg text-sm text-gray-600 focus:border-yellow-400"
+          >
+            <option value={4}>4개씩 보기</option>
+            <option value={8}>8개씩 보기</option>
+            <option value={12}>12개씩 보기</option>
+          </select>
+        </div>
       </div>
       <div className="mb-8 flex gap-x-1 text-lg">
         <p className="">총</p>
         <p className="text-yellow-400 font-semibold"> {totalCount}</p>
         <p className="">권의 책이 있어요</p>
       </div>
-      <div className="grid grid-cols-4 gap-x-2 gap-y-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8">
         {dataList.map((book: any, index: number) => (
           <Link
             href={{
@@ -184,9 +188,9 @@ const MyBookList = () => {
               src={book.cover}
               width={500}
               height={500}
-              className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
+              className="mx-auto object-cover object-center border bg-gray-100 w-36 h-44 lg:w-44 lg:h-60"
             />
-            <div className="w-44 mt-4 mx-auto">
+            <div className="w-36 lg:w-44 mt-4 mx-auto">
               <div className="line-clamp-2 text-base font-medium">
                 {book.title}
               </div>
@@ -198,14 +202,14 @@ const MyBookList = () => {
         ))}
         {dataList?.length === 0 && (
           <div>
-            <div className="border bg-gray-100 text-gray-400 w-44 mx-auto h-60 flex items-center justify-center">
+            <div className="border bg-gray-100 text-gray-400 w-36 h-44 lg:w-44 lg:h-60 mx-auto flex items-center justify-center">
               저장한 책이 없어요 😥
             </div>
           </div>
         )}
       </div>
       {/* Paging zone __________________________________________ */}
-      <div className="mt-20 flex gap-x-2 justify-center">
+      <div className="mt-10 lg:mt-20 flex gap-x-2 justify-center">
         {start > maxPage && (
           <button
             onClick={() => {

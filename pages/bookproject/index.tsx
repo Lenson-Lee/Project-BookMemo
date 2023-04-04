@@ -21,15 +21,15 @@ function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
   return (
     <>
       <ServiceLayout>
-        <div className="mt-10 mb-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end mb-8">
+        <div className="mt-10 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end mb-4 lg:mb-8">
             <div className="text-xl font-semibold ">베스트셀러</div>
             <p className="text-gray-500 text-sm">실시간 베스트셀러</p>
           </div>
           <BookListSlider data={Bestseller} />
         </div>
-        <div className="mt-10 mb-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end mb-8">
+        <div className="mt-10 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end mb-4 lg:mb-8">
             <div className="text-xl font-semibold ">인기 있는 코멘트</div>
             <p className="text-gray-500 text-sm">
               이런 감상평이 있는 책은 어때요?
@@ -37,15 +37,15 @@ function Home({ Bestseller, ItemNewSpecial, ItemNewAll, comment }: Props) {
           </div>
           <CommentSlider data={data} />
         </div>
-        <div className="mt-10 mb-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end mb-8">
+        <div className="mt-10 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+          <div className="lg:flex gap-x-5 items-end mb-4 lg:mb-8">
             <div className="text-xl font-semibold ">주목할만한 신간</div>
             <p className="text-gray-500 text-sm">모두가 관심갖고 있어요</p>
           </div>
           <BookListSlider data={ItemNewSpecial} />
         </div>
         <div className="mt-10 bg-white w-full h-fit py-10 px-10 rounded-xl border">
-          <div className="flex gap-x-5 items-end mb-8">
+          <div className="lg:flex gap-x-5 items-end mb-8">
             <div className="text-xl font-semibold ">따끈따끈 갓 나온 신간</div>
             <p className="text-gray-500 text-sm">지금 막 나온 신간이에요</p>
           </div>

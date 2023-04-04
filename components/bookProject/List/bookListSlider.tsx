@@ -12,9 +12,19 @@ const BookListSlider = ({ data }: Props) => {
   const settings = {
     dots: true,
     infinite: true,
+    arrows: false,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
 
   return (
@@ -42,9 +52,9 @@ const BookListSlider = ({ data }: Props) => {
                 src={book.cover}
                 width={500}
                 height={500}
-                className="object-cover object-center border bg-gray-100 mx-auto w-44  h-60"
+                className="object-cover object-center border bg-gray-100 mx-auto w-36 h-44 lg:w-44 lg:h-60"
               />
-              <div className="w-44 mt-4 mx-auto">
+              <div className="w-36 lg:w-44 mt-4 mx-auto">
                 <div className=" text-base line-clamp-1 font-semibold">
                   {book.title}
                 </div>

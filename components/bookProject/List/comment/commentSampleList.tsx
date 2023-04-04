@@ -1,7 +1,7 @@
 export default function sample() {
   return (
-    <div className="mt-2 opacity-50">
-      <div className="grid grid-cols-3 gap-x-2">
+    <div className="mt-6 lg:mt-2 opacity-50">
+      <div className="grid lg:grid-cols-3 gap-x-2">
         <div className="mx-2 p-5 rounded-lg bg-gray-100">
           {/* profile */}
           <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -27,7 +27,7 @@ export default function sample() {
             <p>{" —○———○——————— "}</p>
           </div>
         </div>
-        <div className="mx-2 p-5 rounded-lg bg-gray-100">
+        <div className="hidden lg:block mx-2 p-5 rounded-lg bg-gray-100">
           {/* profile */}
           <div className="flex justify-between items-center border-b pb-4 mb-4">
             <div className="flex gap-x-2 items-center">
@@ -52,7 +52,7 @@ export default function sample() {
             <p>{`( つ旦O             ╰◟◞    ◟◞    ◟◞╯`}</p>
           </div>
         </div>
-        <div className="mx-2 p-5 rounded-lg bg-gray-100">
+        <div className="hidden lg:block mx-2 p-5 rounded-lg bg-gray-100">
           {/* profile */}
           <div className="flex justify-between items-center border-b pb-4 mb-4">
             <div className="flex gap-x-2 items-center">
