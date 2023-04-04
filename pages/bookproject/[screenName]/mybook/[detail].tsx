@@ -193,8 +193,8 @@ function DetailQuery({ serverdata, userData }: Props) {
             기록추가
           </button>
           {open && (
-            <div className="fixed bg-black/25 left-0 right-0 top-0 h-screen">
-              <div className="max-w-screen-lg mx-auto mt-20 lg:mt-44 bg-white border rounded-xl pt-16 px-6 pb-20 lg:pb-10 lg:px-20">
+            <div className="fixed bg-black/25 z-10 left-0 right-0 top-0 h-screen">
+              <div className="max-w-screen-lg mx-auto mt-5 lg:mt-44 bg-white shadow-lg border rounded-xl pt-16 px-6 pb-20 lg:pb-10 lg:px-20">
                 <div className="text-xl font-semibold">{title}</div>
                 <div className="mt-2 lg:flex gap-x-2">
                   <div className="text-sm">{author}</div>
@@ -210,7 +210,7 @@ function DetailQuery({ serverdata, userData }: Props) {
                     defaultValue={
                       targetMemo ? JSON.parse(targetMemo.keywords) : ""
                     }
-                    className="border-b p-2 w-4/5 outline-none focus:border-yellow-400"
+                    className="border-b p-2 w-4/5 outline-none bg-white focus:border-yellow-400"
                     placeholder="키워드를 , 로 구분하여 입력해주세요 (ex : 희곡, 에세이, 힐링물)"
                   />
                 </div>
@@ -233,7 +233,7 @@ function DetailQuery({ serverdata, userData }: Props) {
                     setMemo(e.currentTarget.value);
                   }}
                   defaultValue={targetMemo ? targetMemo.content : ""}
-                  className="mt-4 lg:mt-10 outline-none resize-none w-full h-96 bg-gray-100 rounded-lg p-5"
+                  className="mt-4 lg:mt-10 outline-none resize-none w-full h-80 bg-gray-100 rounded-lg p-5"
                 />
                 {/* button zone */}
                 <div className="mt-5 flex gap-x-4 justify-center">

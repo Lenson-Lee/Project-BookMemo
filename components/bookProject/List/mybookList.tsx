@@ -153,7 +153,7 @@ const MyBookList = () => {
             onChange={(e) => {
               setSize(Number(e.target.value));
             }}
-            className="px-3 py-2 border rounded-lg text-sm text-gray-600 focus:border-yellow-400"
+            className="px-3 py-2 border rounded-lg text-sm text-gray-600 bg-white focus:border-yellow-400"
           >
             <option value={4}>4개씩 보기</option>
             <option value={8}>8개씩 보기</option>
