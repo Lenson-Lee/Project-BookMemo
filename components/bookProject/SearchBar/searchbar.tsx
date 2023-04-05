@@ -8,14 +8,14 @@ const SearchBar = () => {
     <form
       action={`/bookproject/search/${searchquery}`}
       method="post"
-      className="w-full rounded-full px-4 border-2 border-yellow-400 bg-white dark:bg-zinc-200 flex items-center justify-between"
+      className="w-full rounded-full px-4 border-2 border-yellow-400 bg-white flex items-center justify-between"
     >
       {/* <div className="w-2/5 rounded-full px-4 border-2 border-yellow-400 flex items-center justify-between"> */}
       <input
         onChange={(e) => {
           setQuery(e.target.value);
         }}
-        className="px-3 py-2 w-full outline-none font-light bg-white dark:bg-zinc-200"
+        className="px-3 py-2 w-full outline-none font-light bg-white"
         placeholder="검색어를 입력해 주세요"
       />
       <button type="submit" className="text-yellow-400 p-2">
