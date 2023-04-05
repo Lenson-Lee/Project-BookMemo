@@ -108,7 +108,11 @@ const SearchInfo = ({ data }: Props) => {
         </button>
         <button
           onClick={() => {
-            setOpen(!open);
+            if (uid !== "undefine") {
+              setOpen(!open);
+            } else {
+              alert("로그인 후 이용해주세요💦");
+            }
           }}
           className="relative bg-yellow-300 text-white text-md lg:text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
         >

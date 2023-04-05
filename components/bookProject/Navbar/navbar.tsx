@@ -8,6 +8,8 @@ const navbar = function () {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
 
+  const uid = authUser?.uid ?? "undefine";
+
   const logOutBtn = (
     <div className="flex gap-x-4 items-center ">
       <button className="flex items-center gap-x-2">
@@ -72,18 +74,30 @@ const navbar = function () {
           </svg>
         </Link>
         <div className="hidden lg:flex lg:text-lg lg:gap-x-16">
-          <Link
-            href={{
-              pathname: `/bookproject/${authUser?.email?.replace(
-                "@gmail.com",
-                ""
-              )}`,
-              query: { uid: authUser?.uid },
-            }}
-            className="font-semibold"
-          >
-            나의 서재
-          </Link>
+          {uid === "undefine" && (
+            <button
+              onClick={() => {
+                alert("로그인 후 이용해주세요💦");
+              }}
+              className="font-semibold"
+            >
+              나의 서재
+            </button>
+          )}
+          {uid !== "undefine" && (
+            <Link
+              href={{
+                pathname: `/bookproject/${authUser?.email?.replace(
+                  "@gmail.com",
+                  ""
+                )}`,
+                query: { uid: authUser?.uid },
+              }}
+              className="font-semibold"
+            >
+              나의 서재
+            </Link>
+          )}
           <Link
             href={{
               pathname: "/bookproject/tour",
