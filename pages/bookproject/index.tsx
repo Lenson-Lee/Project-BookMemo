@@ -60,9 +60,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const ItemNewSpecial = await getBookList("ItemNewSpecial");
   const Bestseller = await getBookList("Bestseller");
   const ItemNewAll = await getBookList("ItemNewAll");
+
   const Comment = await getMostComment();
   const comment = JSON.stringify(Comment);
-
   return {
     props: { ItemNewSpecial, Bestseller, ItemNewAll, comment },
   };

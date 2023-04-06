@@ -252,7 +252,10 @@ function DetailQuery({ serverdata, userData }: Props) {
 
                   <button
                     onClick={() => {
-                      if (targetMemo) {
+                      if (memo === "") {
+                        alert("내용을 적어주세요 ʕ o̴̶̷᷄Ⱉo̴̶̷̥᷅⠕ʔ");
+                        return;
+                      } else if (targetMemo) {
                         updateMutation.mutate({
                           id: targetMemo.id,
                           content: memo.length > 0 ? memo : targetMemo.content,
@@ -270,6 +273,15 @@ function DetailQuery({ serverdata, userData }: Props) {
                           keywords: JSON.stringify(keywordArr),
                         });
                       }
+                      setTargetMemo(null);
+                      setKeywordArr([]);
+                      setKeywordInput("");
+                      alert(`
+                        ₍ᐢ๑- ˔ -ᐢ₎   ♡
+                      _(  っ  /￣￣￣/
+                       (´　 ＼/＿＿＿/)
+                       ——————–  🖤 완료되었습니다.
+                       `);
                     }}
                     className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-base lg:text-lg"
                   >

@@ -1,5 +1,6 @@
 import Slider from "react-slick";
 import { useMutation, useQueryClient } from "react-query";
+import { useAuth } from "@/contexts/auth_user.context";
 
 interface Props {
   data: any;
@@ -11,6 +12,7 @@ interface LikeType {
 }
 
 const CommentSlider = ({ data }: Props) => {
+  const authUser = useAuth();
   const settings = {
     dots: true,
     infinite: false,
@@ -29,8 +31,29 @@ const CommentSlider = ({ data }: Props) => {
     ],
   };
 
-  /** 좋아요 클릭 이벤트 */
+  /** 기록 삭제 (데이터 DELETE) */
+  async function deleteQuery(deleteData: number) {
+    const response = await fetch(`/api/bookproject/comment/comment.delete`, {
+      method: "DELETE",
+      body: JSON.stringify(deleteData),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    return response.json();
+  }
+  const deleteMutation = useMutation(
+    (deleteData: any) => deleteQuery(deleteData),
+    {
+      onSuccess: () => {
+        // postTodo가 성공하면 todos로 맵핑된 useQuery api 함수를 실행합니다.
+        queryClient.invalidateQueries("comment");
+        console.log("useMutation > DELETE");
+      },
+    }
+  );
 
+  /** 좋아요 클릭 이벤트 */
   const queryClient = useQueryClient();
   async function likeQuery(likeData: LikeType) {
     const response = await fetch(`/api/bookproject/comment/comment.like.add`, {
@@ -69,12 +92,12 @@ const CommentSlider = ({ data }: Props) => {
                     </div>
                     {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}
                     <button
-                      // onClick={() => {
-                      //   likeMutation.mutate({
-                      //     id: item.id,
-                      //     like: item.like + 1,
-                      //   });
-                      // }}
+                      onClick={() => {
+                        // likeMutation.mutate({
+                        //   id: item.id,
+                        //   like: item.like + 1,
+                        // });
+                      }}
                       className="px-2 py-1 bg-white border rounded-full text-sm text-rose-400 flex gap-x-1 items-center"
                     >
                       <svg

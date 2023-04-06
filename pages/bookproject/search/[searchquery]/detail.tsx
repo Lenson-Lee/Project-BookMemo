@@ -1,7 +1,18 @@
+import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
-import ServiceLayout from "@/components/bookProject/service_layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
+
+import ServiceLayout from "@/components/bookProject/service_layout";
 import BookInfo from "@/components/bookProject/Info/BookInfo";
+import Sample from "@/components/bookProject/List/comment/commentSampleList";
+
+import { getSimilarList } from "@/pages/api/bookproject/search/search.similar.book";
+import { getComment } from "@/pages/api/bookproject/comment/comment.get";
+
+import { useAuth } from "@/contexts/auth_user.context";
+
 import {
   dehydrate,
   QueryClient,
@@ -9,23 +20,16 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getSimilarList } from "@/pages/api/bookproject/search/search.similar.book";
-import Link from "next/link";
-import Image from "next/image";
-import react, { useState, useEffect } from "react";
-
-import { useAuth } from "@/contexts/auth_user.context";
-import { getComment } from "@/pages/api/bookproject/comment/comment.get";
-import Sample from "@/components/bookProject/List/comment/commentSampleList";
 //[검색어] 를 받기 위해 getServerSideProps 사용
 // url에 넘어온 쿼리를 받는 방식은 getStaticProps에서 hook(useRouter)을 사용할 수 없어 실패
 
 interface Props {
   similar: any;
-  commentDB: any;
+  commentDB: any; //useReactQuery를 사용할 것이기에 사용은 안하지만 SSR을 위해 불러온다.
 }
 interface AddType {
   title: string;
@@ -34,13 +38,12 @@ interface AddType {
   isbn: string;
   isbn13: string;
   content: string;
-  score: any;
 }
 interface LikeType {
   id: number;
   like: number;
 }
-function SearchQuery({ similar, commentDB }: Props) {
+function SearchQuery({ similar }: Props) {
   const settings = {
     dots: true,
     infinite: false,
@@ -69,7 +72,11 @@ function SearchQuery({ similar, commentDB }: Props) {
 
   const [open, setOpen] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
-  const [score, setScore] = useState<number>(0);
+
+  /** 수정대상의 id */
+  const [updateTarget, setUpdateTarget] = useState(null);
+  /** 수정대상의 기존 내역 */
+  const [prevComment, setPrevComment] = useState<string>("");
 
   /** useQuery로 값 추가되었을 때 갱신 */
   const queryFn = async () => {
@@ -87,7 +94,7 @@ function SearchQuery({ similar, commentDB }: Props) {
     console.log(data);
   }, [data]);
 
-  /** 기록 추가 (데이터 POST) */
+  /** 코멘트 추가 (데이터 POST) */
   async function submitQuery(addData: AddType) {
     const response = await fetch(`/api/bookproject/comment/comment.add`, {
       method: "POST",
@@ -106,6 +113,52 @@ function SearchQuery({ similar, commentDB }: Props) {
       console.log("useMutation > POST");
     },
   });
+
+  /** 코멘트 삭제 (데이터 DELETE) */
+  async function deleteQuery(deleteData: number) {
+    const response = await fetch(`/api/bookproject/comment/comment.delete`, {
+      method: "DELETE",
+      body: JSON.stringify(deleteData),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    setOpen(false);
+    return response.json();
+  }
+  const deleteMutation = useMutation(
+    (deleteData: any) => deleteQuery(deleteData),
+    {
+      onSuccess: () => {
+        // postTodo가 성공하면 todos로 맵핑된 useQuery api 함수를 실행합니다.
+        queryClient.invalidateQueries("comment");
+        console.log("useMutation > DELETE");
+      },
+    }
+  );
+
+  /** 코멘트 수정 (데이터 UPDATE) */
+  async function updateQuery(updateData: { id: number; content: string }) {
+    const response = await fetch(`/api/bookproject/comment/comment.update`, {
+      method: "put",
+      body: JSON.stringify(updateData),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    return response.json();
+  }
+  const updateMutation = useMutation(
+    (updateData: { id: number; content: string }) => updateQuery(updateData),
+    {
+      onSuccess: () => {
+        // postTodo가 성공하면 todos로 맵핑된 useQuery api 함수를 실행합니다.
+        queryClient.invalidateQueries("comment");
+        console.log("useMutation > UPDATE");
+        setOpen(false);
+      },
+    }
+  );
 
   /** 좋아요 클릭 이벤트 */
   async function likeQuery(likeData: LikeType) {
@@ -173,6 +226,7 @@ function SearchQuery({ similar, commentDB }: Props) {
                 onChange={(e) => {
                   setComment(e.currentTarget.value);
                 }}
+                defaultValue={prevComment}
                 placeholder={
                   "    ハ____ハ    ｡ ﾟﾟ･ ｡ ･ﾟﾟ ｡\n ꒰   ⬩ ω ⬩  ꒱  ˚｡          ｡˚\n |   つ~ 코멘트　ﾟ ･｡･ﾟ"
                 }
@@ -183,7 +237,9 @@ function SearchQuery({ similar, commentDB }: Props) {
                 <button
                   onClick={() => {
                     setOpen(false);
+                    setUpdateTarget(null);
                     setComment("");
+                    setPrevComment("");
                   }}
                   className=" bg-gray-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                 >
@@ -192,15 +248,35 @@ function SearchQuery({ similar, commentDB }: Props) {
 
                 <button
                   onClick={() => {
-                    postMutation.mutate({
-                      title: querydata.title,
-                      userId: authUser.authUser?.uid ?? "undefine",
-                      isbn: querydata.isbn,
-                      isbn13: querydata.isbn_13,
-                      content: comment,
-                      score: score,
-                      displayName: authUser.authUser?.displayName ?? "홍길동",
-                    });
+                    if (comment === "") {
+                      alert("코멘트를 적어주세요 ʕ o̴̶̷᷄Ⱉo̴̶̷̥᷅⠕ʔ");
+                      return;
+                    } else if (updateTarget) {
+                      updateMutation.mutate({
+                        id: updateTarget,
+                        content: comment,
+                      });
+                    } else {
+                      postMutation.mutate({
+                        title: querydata.title,
+                        userId: authUser.authUser?.uid ?? "undefine",
+                        isbn: querydata.isbn,
+                        isbn13: querydata.isbn_13,
+                        content: comment,
+                        displayName: authUser.authUser?.displayName ?? "홍길동",
+                      });
+                    }
+
+                    setOpen(false);
+                    setUpdateTarget(null);
+                    setComment("");
+                    setPrevComment("");
+                    alert(`
+                        ₍ᐢ๑- ˔ -ᐢ₎   ♡
+                      _(  っ  /￣￣￣/
+                       (´　 ＼/＿＿＿/)
+                       ——————–  🖤 완료되었습니다.
+                       `);
                   }}
                   className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                 >
@@ -215,7 +291,7 @@ function SearchQuery({ similar, commentDB }: Props) {
             data.map((item: any, index: number) => {
               return (
                 <div key={item.id + index} className="mt-2">
-                  <div className="mx-2 p-5 rounded-lg bg-gray-100 h-56">
+                  <div className="mx-2 p-5 rounded-lg bg-gray-100 h-56 relative">
                     {/* profile */}
                     <div className="flex justify-between items-center border-b pb-4 mb-4">
                       <div className="flex gap-x-2 items-center">
@@ -231,6 +307,12 @@ function SearchQuery({ similar, commentDB }: Props) {
                             id: item.id,
                             like: item.like + 1,
                           });
+                          alert(`  
+                          ♡ ♡ ♡ ₍ᐢɞ̴̶̷.̮ɞ̴̶̷ᐢ₎ ♡ ♡ ♡
+                          ┏━ ♡ ━ U U━ ♡ ━┓
+                          ♡ 좋아요를 눌렀어요 ♡
+                          ┗━ ♡ ━━━━ ♡ ━┛
+                          `);
                         }}
                         className="px-2 py-1 bg-white border rounded-full text-sm text-rose-400 flex gap-x-1 items-center"
                       >
@@ -247,7 +329,60 @@ function SearchQuery({ similar, commentDB }: Props) {
                       </button>
                     </div>
                     {/* content */}
-                    <div className="line-clamp-5">{item.content}</div>
+                    <div className="line-clamp-4 h-1/2">{item.content}</div>
+
+                    {item.userId === authUser.authUser?.uid && (
+                      <div className="absolute bottom-5 right-5 flex gap-x-4 justify-end text-gray-600">
+                        {/* 수정 */}
+                        <button
+                          onClick={() => {
+                            setPrevComment(item.content);
+                            setUpdateTarget(item.id);
+                            setOpen(true);
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4 hover:text-gray-800"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                            />
+                          </svg>
+                        </button>
+                        {/* 삭제 */}
+                        <button
+                          onClick={() => {
+                            deleteMutation.mutate({
+                              id: item.id,
+                            });
+
+                            alert("삭제하였습니다.");
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4 hover:text-gray-800"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
