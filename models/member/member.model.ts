@@ -85,9 +85,31 @@ async function findByScreenName(
   return data;
 }
 
+/** 멤버 닉네임을 조회 */
+async function findByDisplayName(uid: string) {
+  const findResult = await FirebaseAdmin.getInstance().Firestore.runTransaction(
+    async (transaction: any) => {
+      const memberRef = FirebaseAdmin.getInstance()
+        .Firestore.collection(MEMBER_COL)
+        .doc(uid);
+      const memberDoc = await transaction.get(memberRef);
+      if (memberDoc.exists === false) {
+        console.log("😡 findByDisplayName가 없어요! uid :", uid);
+      }
+      return memberDoc._fieldsProto;
+    }
+  );
+  const data = {
+    name: findResult ? findResult.displayName.stringValue : "정보없음",
+    photoURL: findResult ? findResult.photoURL.stringValue : "",
+  };
+  return data;
+}
+
 const MemberModel = {
   add,
   findByScreenName,
+  findByDisplayName,
 };
 
 export default MemberModel;
