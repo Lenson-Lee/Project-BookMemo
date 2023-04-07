@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { GetServerSideProps } from "next";
 import { GoogleAuthProvider } from "firebase/auth";
 
@@ -16,6 +16,7 @@ import {
 import { getManyReadUser } from "../api/bookproject/tour/tour.get.rankuser";
 import { getSearchDetail } from "../api/bookproject/search/search.detail";
 import Image from "next/image";
+import Link from "next/link";
 
 const provider = new GoogleAuthProvider();
 
@@ -46,8 +47,24 @@ function Home({
   const [state, setState] = useState<string>("star");
   /** 상태별로 별점순/저장순 DB 출력 */
   const [stateDB, setStateDB] = useState<any>(scoreData);
+
+  /** 유저 클릭 시 선택옵션 출력 */
+  const modalEl = useRef();
+  const [openUser, setOpenUser] = useState<boolean>(false);
+  const [openUserID, setOpenUserID] = useState<string>("");
+
+  const [isDropMenuOpen, setDropMenuOpen] = useState(false);
+
+  const toggleDropMenu = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.stopPropagation(); // 이벤트 캡쳐링 방지
+    setOpenUser(!openUser);
+  };
   return (
-    <>
+    <div
+      onClick={() => {
+        setOpenUser(false);
+      }}
+    >
       <ServiceLayout>
         <div className="mt-5 h-96 w-full rounded-xl flex justify-center bg-gradient-to-r from-zinc-800 to-zinc-900 cursor-pointer">
           <Image
@@ -99,14 +116,16 @@ function Home({
               <div className="text-xl font-semibold ">
                 👀 유저들의 안목을 믿어보세요!
               </div>
-              <div className="text-gray-500 divide-x space-x-4">
+              <div className="text-gray-400 flex gap-x-4">
                 <button
                   onClick={() => {
                     setState("star");
                     setStateDB(scoreData);
                   }}
                   className={
-                    (state === "star" ? "text-yellow-400 " : "") + " text-md"
+                    (state === "star"
+                      ? "bg-yellow-300 text-white"
+                      : "bg-gray-100") + " text-md px-2 rounded-lg "
                   }
                 >
                   별점 높은 순
@@ -117,8 +136,9 @@ function Home({
                     setStateDB(rankData);
                   }}
                   className={
-                    (state === "save" ? "text-yellow-400 " : "") +
-                    " text-md pl-4"
+                    (state === "save"
+                      ? "bg-yellow-300 text-white"
+                      : "bg-gray-100") + " text-md px-2 rounded-lg "
                   }
                 >
                   저장 많은 순
@@ -140,13 +160,35 @@ function Home({
               </p>
             </div>
             {/* list */}
-            <div className="space-y-5 text-md my-auto">
+            <div className="space-y-1 text-md my-auto">
               {readUserData &&
                 readUserData.map((user: any, index: number) => (
                   <div
+                    onClick={(e: any) => {
+                      toggleDropMenu(e);
+                      setOpenUserID(user.userId);
+                    }}
                     key={user.userId + index}
-                    className="flex justify-between items-center"
+                    className={
+                      (openUser && openUserID === user.userId
+                        ? "bg-gray-100 "
+                        : "") +
+                      "hover:bg-gray-50 p-2 rounded-lg flex justify-between items-center cursor-pointer relative"
+                    }
                   >
+                    {openUser && openUserID === user.userId && (
+                      <div>
+                        <Link
+                          href={{
+                            pathname: `/bookproject/${user.screenName}`,
+                            query: { uid: user.userId, name: user.displayName },
+                          }}
+                          className="absolute z-10 right-0 -bottom-12 text-sm text-gray-500 hover:text-gray-600 hover:border-gray-300 backdrop-blur-md bg-white/25 p-5 rounded-lg border"
+                        >
+                          서재 보러 가기
+                        </Link>
+                      </div>
+                    )}
                     <div className="flex gap-x-2 items-center">
                       <div className="mr-2">{index + 1}</div>
                       {user.photoURL && (
@@ -155,7 +197,7 @@ function Home({
                           alt="프로필 이미지"
                           width={500}
                           height={500}
-                          className="w-8 h-8 rounded-full bg-gray-100"
+                          className="w-8 h-8 rounded-full border bg-gray-100"
                         />
                       )}
                       <p className="max-w-1/6 line-clamp-1">
@@ -193,7 +235,7 @@ function Home({
           <ApiBookListSlider apidata={ItemNewAll} slide={6} />
         </div>
       </ServiceLayout>
-    </>
+    </div>
   );
 }
 

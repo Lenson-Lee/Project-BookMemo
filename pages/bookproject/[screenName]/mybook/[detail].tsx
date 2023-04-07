@@ -35,6 +35,8 @@ function DetailQuery({ serverdata, userData }: Props) {
   const { apidata, mydata } = JSON.parse(serverdata);
   const { title, categoryName, author, isbn, isbn13 } = apidata;
 
+  const [master, setMaster] = useState<boolean>(false); // 현재 페이지의 uid와 내 계정의 uid가 일치할 때 추가/수정/삭제 가능
+
   const [open, setOpen] = useState<boolean>(false);
   const [keywordInput, setKeywordInput] = useState<string>(""); // 분류되지 않은키워드 문자열
 
@@ -61,6 +63,13 @@ function DetailQuery({ serverdata, userData }: Props) {
     if (!router.isReady) return;
   }, [router.isReady]);
 
+  useEffect(() => {
+    if (router.query.uid === authUser?.authUser?.uid) {
+      setMaster(true);
+    } else {
+      setMaster(false);
+    }
+  }, [router.query, authUser?.authUser?.uid]);
   /** useQuery로 값 추가되었을 때 갱신 */
   const udata = JSON.parse(userData);
   const queryFn = async () => {
@@ -178,20 +187,27 @@ function DetailQuery({ serverdata, userData }: Props) {
   return (
     <ServiceLayout>
       <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
-        <BookInfo state="mybook" apidata={apidata} mydata={mydata}></BookInfo>
+        <BookInfo
+          state="mybook"
+          apidata={apidata}
+          mydata={mydata}
+          master={master}
+        ></BookInfo>
       </div>
       {/*  */}
       <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
         <div className="flex justify-between">
           <div className="text-xl font-semibold">나의 기록</div>
-          <button
-            onClick={() => {
-              setOpen(true);
-            }}
-            className="bg-yellow-300 hover:bg-yellow-400 text-white text-sm font-semibold rounded-lg px-4 py-1"
-          >
-            기록추가
-          </button>
+          {master && (
+            <button
+              onClick={() => {
+                setOpen(true);
+              }}
+              className="bg-yellow-300 hover:bg-yellow-400 text-white text-sm font-semibold rounded-lg px-4 py-1"
+            >
+              기록추가
+            </button>
+          )}
           {open && (
             <div className="fixed bg-black/25 z-10 left-0 right-0 top-0 h-screen">
               <div className="max-w-screen-lg mx-auto mt-5 lg:mt-44 bg-white shadow-lg border rounded-xl pt-16 px-6 pb-20 lg:pb-10 lg:px-20">
@@ -305,29 +321,31 @@ function DetailQuery({ serverdata, userData }: Props) {
                   <div className="text-sm text-gray-500">
                     {calcDay(parseISO(item.createdAt))}
                   </div>
-                  <div className="flex gap-x-2 text-gray-400 text-sm">
-                    <button
-                      onClick={() => {
-                        setOpen(true);
-                        setTargetMemo(item);
-                      }}
-                      className="hover:text-gray-500"
-                    >
-                      수정하기
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (window.confirm("해당 기록을 지우시겠습니까?")) {
-                          deleteMutation.mutate({
-                            id: item.id,
-                          });
-                        }
-                      }}
-                      className="hover:text-gray-500"
-                    >
-                      삭제하기
-                    </button>
-                  </div>
+                  {master && (
+                    <div className="flex gap-x-2 text-gray-400 text-sm">
+                      <button
+                        onClick={() => {
+                          setOpen(true);
+                          setTargetMemo(item);
+                        }}
+                        className="hover:text-gray-500"
+                      >
+                        수정하기
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (window.confirm("해당 기록을 지우시겠습니까?")) {
+                            deleteMutation.mutate({
+                              id: item.id,
+                            });
+                          }
+                        }}
+                        className="hover:text-gray-500"
+                      >
+                        삭제하기
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* white-space : pre-wrap  \n인식하여 공백설정 */}

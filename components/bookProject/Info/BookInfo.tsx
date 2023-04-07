@@ -1,4 +1,5 @@
 import { useAuth } from "@/contexts/auth_user.context";
+import { auth } from "firebase-admin";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,9 +17,10 @@ interface Props {
   apidata: any; // 알라딘에서 긁은 데이터
   state: string; // state = {나의서재 책 detail페이지 : mybook, 책 검색 상세페이지 : search}
   mydata: any; //내가 저장한 책 정보 데이터
+  master: boolean; //현재 로그인 uid와 해당 정보의 uid주인이 일치하면 수정/삭제 가능
 }
 
-const BookInfo = ({ state, apidata, mydata }: Props) => {
+const BookInfo = ({ state, apidata, mydata, master }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
   const router = useRouter();
@@ -72,8 +74,10 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
       );
     });
   }
+
   useEffect(() => {
     if (!router.isReady) return;
+
     //screenName 쓸모없는뎅 url때문에 넘어오나?
     console.log("🙆‍♀️ router.query.screenName : ", router.query.screenName);
   }, [router.isReady, router.query.screenName]);
@@ -97,7 +101,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
               />
             </div>
           )}
-          {state === "mybook" ? (
+          {state === "mybook" && master ? (
             <div className="flex justify-center lg:justify-end gap-x-4">
               <button
                 onClick={(e) => {

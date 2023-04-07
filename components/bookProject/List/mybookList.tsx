@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const MyBookList = () => {
+interface Props {
+  uid: any; //페이지 주인의 uid
+  name: any;
+}
+const MyBookList = ({ uid, name }: Props) => {
   /** 현재 페이지 */
   const [page, setPage] = useState(1);
   /** 페이지당 책 노출 수 */
@@ -32,7 +36,7 @@ const MyBookList = () => {
 
     const data = {
       state: state,
-      userId: authUser?.uid,
+      userId: uid,
       page: page,
       size: size,
     };
@@ -109,7 +113,11 @@ const MyBookList = () => {
       <div className="lg:flex items-center justify-between mb-4">
         <div className="lg:flex items-end mb-4 lg:mb-0 ">
           <div className="text-xl font-semibold mr-8 mb-2 lg:mb-0 ">
-            내가 저장한 책
+            {`${
+              name
+                ? "📑 " + name + "님이 저장한 책이에요"
+                : "📑 지금까지 저장한 책이에요"
+            }`}
           </div>
           <button
             onClick={() => {
@@ -225,7 +233,6 @@ const MyBookList = () => {
             <button
               key={item}
               onClick={() => {
-                console.log("클릭한 버튼 : ", item);
                 setPage(item);
               }}
               className={

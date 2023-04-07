@@ -9,13 +9,15 @@ import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { useRouter } from "next/router";
+import { useAuth } from "@/contexts/auth_user.context";
 
 interface Props {
-  alldata: any;
+  alldata: any; //장르 차트를 위한 카운트
 }
 
 function Mybook({ alldata }: Props) {
   const router = useRouter();
+  const authUser = useAuth();
   /** 키워드 중복 제거 */
   const [uniqueKwList, setUniqueKwList] = useState<any>([]);
 
@@ -62,20 +64,13 @@ function Mybook({ alldata }: Props) {
     const uniqueArr: any = [...set];
     setUniqueKwList(uniqueArr);
   }, [data]);
-
-  /** 이거 굳이 안해도 되지 않을까?💦 */
-  // useEffect(() => {
-  //   memodata.map((item: any) => {
-  //     setMemoList((memoList: []) => [...memoList, item.content]);
-  //   });
-  // }, [memodata]);
-
-  // useEffect(() => {
-  //   console.log(memoList, memodata);
-  // }, [memoList]);
   return (
     <ServiceLayout>
-      <p className="px-4 mt-10 mb-5 text-lg font-semibold">나의 서재</p>
+      <p className="px-4 mt-10 mb-5 text-lg font-semibold">
+        {router.query.uid === authUser.authUser?.uid
+          ? "나의 서재"
+          : `${router.query.name}님의 서재`}
+      </p>
 
       <div className="lg:flex gap-x-4 mb-4">
         <div className="bg-white w-full lg:w-1/2 p-6 lg:py-10 lg:px-10 rounded-xl border">
@@ -105,7 +100,7 @@ function Mybook({ alldata }: Props) {
       </div>
       <div className="lg:flex gap-x-4">
         <div className="bg-white w-full h-fit p-6 lg:py-10 lg:px-10 rounded-xl border">
-          <MyBookList />
+          <MyBookList uid={router.query.uid} name={router.query.name} />
         </div>
         <div className="mt-4 lg:mt-0 w-full lg:w-1/3 space-y-4">
           <div className="h-fit p-10 bg-white rounded-xl border">

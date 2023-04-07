@@ -99,9 +99,14 @@ async function findByDisplayName(uid: string) {
       return memberDoc._fieldsProto;
     }
   );
+
+  /** abc@gmail.com 과 abc@naver.com 둘 다 스크린네임이 abc이게 되니 구분해야한다. */
+  let split = (findResult.email.stringValue as string).split("@");
+  const screenName = split[0];
   const data = {
     name: findResult ? findResult.displayName.stringValue : "정보없음",
     photoURL: findResult ? findResult.photoURL.stringValue : "",
+    screenName: screenName ? screenName : "정보없음",
   };
   return data;
 }

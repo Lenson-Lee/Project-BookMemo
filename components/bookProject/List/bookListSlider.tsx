@@ -28,8 +28,6 @@ const BookListSlider = ({ apidata, slide, score }: Props) => {
       },
     ],
   };
-  console.log("💙슬라이더 데이터 :", apidata);
-  console.log("💙score :", score);
 
   return (
     <>

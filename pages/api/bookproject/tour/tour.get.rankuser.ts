@@ -42,6 +42,7 @@ export async function getManyReadUser() {
     userData.push({
       displayName: findResult.name,
       photoURL: findResult.photoURL,
+      screenName: findResult.screenName,
       count: user._count.userId,
       userId: user.userId,
     });

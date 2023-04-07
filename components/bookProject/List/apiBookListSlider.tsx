@@ -11,7 +11,6 @@ interface Props {
 
 //알라딘에서 받아온 api 순정 데이터 렌더(bookListSlider와 형태가 조금 달라서 따로 작성)
 const apiBookListSlider = ({ apidata, slide }: Props) => {
-  console.log(apidata, slide);
   const settings = {
     dots: true,
     infinite: true,

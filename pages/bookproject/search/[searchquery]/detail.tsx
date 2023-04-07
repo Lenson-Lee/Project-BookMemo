@@ -189,7 +189,12 @@ function SearchQuery({ similar }: Props) {
   return (
     <ServiceLayout>
       <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
-        <BookInfo state="search" apidata={querydata} mydata></BookInfo>
+        <BookInfo
+          state="search"
+          apidata={querydata}
+          mydata
+          master={false}
+        ></BookInfo>
       </div>
       <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
         <div className="lg:flex justify-between items-center">
