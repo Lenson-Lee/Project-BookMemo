@@ -139,13 +139,13 @@ function Tour({ categorybook, ItemNewSpecial }: Props) {
         </div>
       )}
       <div className="flex gap-x-4 mt-10 mb-10">
-        <div className="bg-white w-2/3 h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
+        <div className="bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
           <div className="lg:flex gap-x-5 items-end mb-4 lg:mb-8">
             <div className="text-xl font-semibold ">👏 주목할만한 신간</div>
             <p className="text-gray-500 text-sm">모두가 관심갖고 있어요</p>
           </div>
 
-          <ApiBookListSlider apidata={ItemNewSpecial} slide={4} />
+          <ApiBookListSlider apidata={ItemNewSpecial} slide={6} />
         </div>
 
         <div className="bg-white w-1/3 h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border"></div>
