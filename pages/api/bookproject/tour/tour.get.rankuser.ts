@@ -35,7 +35,7 @@ export async function getManyReadUser() {
   //파이어베이스 데이터와 함께 넣을 곳
   let userData: any = [];
 
-  read.forEach(async (user) => {
+  read.forEach(async (user, index: number) => {
     //닉네임, 프로필사진 찾기(파이어베이스)
     const findResult = await MemberModel.findByDisplayName(user.userId!);
     //변수에 주입
@@ -45,7 +45,17 @@ export async function getManyReadUser() {
       count: user._count.userId,
       userId: user.userId,
     });
+    return userData;
   });
+
+  /** 배열 순서 확실하게 sort */
+  function compareCount(a: number, b: number) {
+    return b - a;
+  }
+  if (userData.length > 1) {
+    userData.sort(compareCount);
+  }
+
   const data = { read: userData };
   return {
     data,

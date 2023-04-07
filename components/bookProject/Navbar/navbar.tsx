@@ -47,6 +47,12 @@ const navbar = function () {
       >
         회원가입
       </button>
+      <button
+        // onClick={signInWithGoogle}
+        className="text-sm lg:text-xs text-gray-400 hover:text-gray-500"
+      >
+        체험용 계정
+      </button>
     </>
   );
 
@@ -73,7 +79,7 @@ const navbar = function () {
             />
           </svg>
         </Link>
-        <div className="hidden lg:flex lg:text-lg lg:gap-x-16">
+        <div className="hidden lg:flex lg:text-lg lg:gap-x-5">
           {uid === "undefine" && (
             <button
               onClick={() => {
