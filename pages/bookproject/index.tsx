@@ -49,6 +49,39 @@ function Home({
   return (
     <>
       <ServiceLayout>
+        <div className="mt-5 h-96 w-full rounded-xl flex justify-center bg-gradient-to-r from-zinc-800 to-zinc-900 cursor-pointer">
+          <Image
+            width={500}
+            height={500}
+            src={"/images/bookImage.png"}
+            alt="메인이미지"
+            className="object-cover object-center w-72 "
+          />
+          <div className="pl-36 text-right w-1/2 text-white my-auto">
+            <div className="flex gap-x-2 justify-end">
+              <span className="border-2 border-indigo-400 bg-indigo-400 px-3 rounded-full text-sm font-semibold">
+                마이북
+              </span>
+            </div>
+            <p className="mt-3 text-3xl font-semibold">
+              오늘의 독서를 기록해보세요!
+            </p>
+            <p className="mt-5 text-lg">
+              {/* 기록은 의미 있는 독서의 시작이에요! */}
+              책을 읽다가 감명 깊었던 내용이 기억나지 않는 경험이 있으신가요?
+            </p>
+            <p className="text-lg">
+              마이북에서 중요한 부분을 기록하고 공유해 보세요!
+            </p>
+          </div>
+          {/* <Image
+            width={500}
+            height={500}
+            src={"/images/bookImage(2).png"}
+            alt="메인이미지"
+            className="object-cover object-center w-[36rem]"
+          /> */}
+        </div>
         <div className="mt-10 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border">
           <div className="lg:flex gap-x-5 items-end mb-4 lg:mb-8">
             <div className="text-xl font-semibold ">🥇 베스트셀러</div>
