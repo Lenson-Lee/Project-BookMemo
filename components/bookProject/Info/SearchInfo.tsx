@@ -48,19 +48,36 @@ const SearchInfo = ({ data }: Props) => {
       fieldcount: data?.categoryName.split(">").length > 1 ? 1 : 0,
       cover: data.cover,
     };
-    console.log(postdata);
-    await fetch("/api/bookproject/mybook/mybook.add", {
+    const res = await fetch("/api/bookproject/mybook/mybook.add", {
       method: "POST",
       body: JSON.stringify(postdata),
       headers: {
         Accept: "application / json",
       },
     });
+    if (res.status === 400) {
+      alert(`
+      ニ|
+      ニ|∧,,∧     앗..!
+      ニ(・ω・;） 이미 서재에 존재하는
+      ニと　 )   책이에요. 
+      ニと_ノ   
+      ニ|
+      `);
+    } else {
+      alert(`
+      + 　 _n　　　　　 +
+      　　 (　} ∧＿∧
+      +　　＼(・ω・ ) 저장이
+      　　　 　| 　　ヽ 완료되었습니다.
+      　　 　 /　＿とノ
+      　　　 ,ゝ,,,)　 ヽ_,,)
+      `);
+    }
   }
 
   // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리
   useEffect(() => {
-    console.log("책 상태 변경");
     if (bookState === "wish" && uid !== "undefine") {
       const result = confirm(
         "🖤찜 리스트에 들어갔어요! 나의 서재로 이동할까요?"
