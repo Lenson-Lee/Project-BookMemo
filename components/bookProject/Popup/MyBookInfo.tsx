@@ -54,9 +54,9 @@ const MyBookInfo = ({ getData, response, mydata }: Props) => {
 
   useEffect(() => {
     /**클릭시 부모에게 전달 */
-    getData({ score: score, start: start, end: end });
+    getData({ score: score, start: start, end: end, bookState: bookState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [score, start, end]);
+  }, [score, start, end, bookState]);
 
   useEffect(() => {
     //mydata가 기본 Props로 들어가서 항상 true가 들어감. id로 유무 식별

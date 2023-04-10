@@ -77,7 +77,7 @@ function Mybook({ alldata }: Props) {
           <div className="lg:flex gap-x-5 items-end">
             <p className="text-xl font-semibold">많이 읽은 장르</p>
             <p className="text-gray-500 text-xs">
-              다 읽은 책, 읽고있는 책 기준
+              다 읽은 책, 읽고 있는 책 기준
             </p>
           </div>
           <div className="w-4/5 mx-auto mt-6 lg:mt-12 flex items-center">

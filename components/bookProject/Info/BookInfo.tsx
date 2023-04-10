@@ -9,6 +9,10 @@ import MyBookInfo from "../Popup/MyBookInfo";
 import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
 
+/**
+ *  책 조회 상단부
+ */
+
 const DatePicker = dynamic(
   () => import("@/components/bookProject/DatePicker/DatePicker")
 );
@@ -22,11 +26,11 @@ interface Props {
 
 const BookInfo = ({ state, apidata, mydata, master }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
   const router = useRouter();
   const authUser = useAuth();
 
   /** MyBookInfo 컴포넌트에서 받은 정보(별점, 읽은기간) */
+
   const [getDataList, setDataList] = useState<string | any>(null);
   const getData = (info: any) => {
     setDataList(info);
@@ -50,7 +54,7 @@ const BookInfo = ({ state, apidata, mydata, master }: Props) => {
     setOpen(false);
     const updatedata = {
       id: mydata.id,
-      state: bookState,
+      state: getDataList ? getDataList.bookState : "finish",
       score: getDataList ? getDataList.score : 0,
       start: getDataList ? getDataList.start : null,
       end: getDataList ? getDataList.end : null,
@@ -62,7 +66,6 @@ const BookInfo = ({ state, apidata, mydata, master }: Props) => {
         Accept: "application / json",
       },
     });
-    console.log(response.json());
     return response;
   };
 
@@ -159,7 +162,9 @@ const BookInfo = ({ state, apidata, mydata, master }: Props) => {
               자세히 보기
             </Link>
           </div>
+          {/* 검색해서 찾은 책 찜하기 / 서재에 추가하기 버튼  */}
           {state === "search" ? <SearchInfo data={apidata} /> : null}
+          {/* 내가 저장한 책 정보 (읽은 날짜 / 별점 / 읽은 상태) */}
           {state === "mybook" ? <MybookDetail mydata={mydata} /> : null}
         </div>
       </div>

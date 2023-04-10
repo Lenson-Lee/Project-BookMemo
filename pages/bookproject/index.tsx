@@ -66,7 +66,7 @@ function Home({
       }}
     >
       <ServiceLayout>
-        <div className="mt-5 h-96 w-full rounded-xl flex justify-center bg-gradient-to-r from-zinc-800 to-zinc-900 cursor-pointer">
+        <div className="mt-5 h-96 w-full rounded-xl flex justify-center bg-gradient-to-r from-yellow-100 to-rose-300 cursor-pointer">
           <Image
             width={500}
             height={500}
@@ -76,7 +76,7 @@ function Home({
           />
           <div className="pl-36 text-right w-1/2 text-white my-auto">
             <div className="flex gap-x-2 justify-end">
-              <span className="border-2 border-indigo-400 bg-indigo-400 px-3 rounded-full text-sm font-semibold">
+              <span className="bg-rose-400 px-3 rounded-full text-sm font-semibold">
                 마이북
               </span>
             </div>

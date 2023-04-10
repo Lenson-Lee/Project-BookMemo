@@ -13,7 +13,7 @@ interface Props {
 }
 const SearchInfo = ({ data }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
+  const [bookState, setBookState] = useState<string>("finish"); //  finish, wish
 
   /** MyBookInfo 컴포넌트에서 받은 정보(별점, 읽은기간) */
   const [getDataList, setDataList] = useState<string | any>(null);
@@ -30,10 +30,9 @@ const SearchInfo = ({ data }: Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   async function response() {
     setOpen(false);
-
     const postdata = {
       uid: uid,
-      state: bookState,
+      state: getDataList?.bookState ? getDataList.bookState : bookState,
       title: data.title,
       author: data.author,
       isbn: data.isbn,
@@ -60,35 +59,25 @@ const SearchInfo = ({ data }: Props) => {
       ニ|
       ニ|∧,,∧     앗..!
       ニ(・ω・;） 이미 서재에 존재하는
-      ニと　 )   책이에요. 
-      ニと_ノ   
+      ニと　 )   책이에요.
+      ニと_ノ
       ニ|
       `);
     } else {
       alert(`
-      + 　 _n　　　　　 +
-      　　 (　} ∧＿∧
-      +　　＼(・ω・ ) 저장이
-      　　　 　| 　　ヽ 완료되었습니다.
-      　　 　 /　＿とノ
-      　　　 ,ゝ,,,)　 ヽ_,,)
-      `);
+        + 　 _n　　　　　 +
+        　　 (　} ∧＿∧
+        +　　＼(・ω・ ) 저장이
+        　　　 　| 　　ヽ 완료되었습니다.
+        　　 　 /　＿とノ
+        　　　 ,ゝ,,,)　 ヽ_,,)
+        `);
     }
   }
 
   // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리
   useEffect(() => {
     if (bookState === "wish" && uid !== "undefine") {
-      const result = confirm(
-        "🖤찜 리스트에 들어갔어요! 나의 서재로 이동할까요?"
-      );
-      if (result) {
-        console.log(authUser.authUser?.email?.replace("@", ""));
-        document.location = `/bookproject/${authUser.authUser?.email?.replace(
-          "@",
-          ""
-        )}?uid=${uid}`;
-      }
       response();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
