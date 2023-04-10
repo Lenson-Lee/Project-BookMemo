@@ -28,7 +28,6 @@ export async function getBookDetail(target: any) {
       },
     ],
   });
-
   //API -> search detail과 합칠 수 있을 것 같은데
   const request = await fetch(
     `

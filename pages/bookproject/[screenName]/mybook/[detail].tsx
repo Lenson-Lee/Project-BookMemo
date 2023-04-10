@@ -61,9 +61,10 @@ function DetailQuery({ serverdata, userData }: Props) {
     // console.log("🙆‍♀️ apidata 있나요?", apidata);
     // console.log("🙆‍♀️ mydata 있나요?", mydata);
     if (!router.isReady) return;
-  }, [router.isReady]);
+  }, [router.isReady, mydata]);
 
   useEffect(() => {
+    console.log(router.query);
     if (router.query.uid === authUser?.authUser?.uid) {
       setMaster(true);
     } else {
@@ -195,9 +196,11 @@ function DetailQuery({ serverdata, userData }: Props) {
         ></BookInfo>
       </div>
       {/*  */}
-      <div className="mt-10 lg:mt-20 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
+      <div className="mt-10 mb-10 bg-white w-full h-fit px-6 pt-6 pb-10 lg:pt-10 lg:pb-10 lg:px-20 rounded-xl border">
         <div className="flex justify-between">
-          <div className="text-xl font-semibold">나의 기록</div>
+          <div className="text-xl font-semibold">
+            {router.query.name + "님의 독서 기록"}
+          </div>
           {master && (
             <button
               onClick={() => {

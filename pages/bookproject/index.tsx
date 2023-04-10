@@ -177,13 +177,12 @@ function Home({
                     }
                   >
                     {openUser && openUserID === user.userId && (
-                      <div>
+                      <div className="absolute z-10 right-0 -bottom-12 text-sm text-gray-500 hover:text-gray-600 hover:border-gray-300 backdrop-blur-md bg-white/25 p-5 rounded-lg border">
                         <Link
                           href={{
                             pathname: `/bookproject/${user.screenName}`,
                             query: { uid: user.userId, name: user.displayName },
                           }}
-                          className="absolute z-10 right-0 -bottom-12 text-sm text-gray-500 hover:text-gray-600 hover:border-gray-300 backdrop-blur-md bg-white/25 p-5 rounded-lg border"
                         >
                           서재 보러 가기
                         </Link>

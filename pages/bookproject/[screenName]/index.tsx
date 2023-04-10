@@ -47,6 +47,7 @@ function Mybook({ alldata }: Props) {
   /** router query를 받고 시작 */
   useEffect(() => {
     if (!router.isReady) return;
+    console.log("🤦‍♀️ 라우터 쿼리 : ", router.query);
   }, [router.isReady]);
 
   useEffect(() => {
@@ -100,7 +101,11 @@ function Mybook({ alldata }: Props) {
       </div>
       <div className="lg:flex gap-x-4">
         <div className="bg-white w-full h-fit p-6 lg:py-10 lg:px-10 rounded-xl border">
-          <MyBookList uid={router.query.uid} name={router.query.name} />
+          <MyBookList
+            uid={router.query.uid}
+            name={router.query.name}
+            screenName={router.query.screenName}
+          />
         </div>
         <div className="mt-4 lg:mt-0 w-full lg:w-1/3 space-y-4">
           <div className="h-fit p-10 bg-white rounded-xl border">

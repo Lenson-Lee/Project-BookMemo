@@ -5,10 +5,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 interface Props {
-  uid: any; //페이지 주인의 uid
-  name: any;
+  uid: string | string[] | undefined; //페이지 주인의 uid
+  name: string | string[] | undefined; //닉네임
+  screenName: string | string[] | undefined; //아이디
 }
-const MyBookList = ({ uid, name }: Props) => {
+const MyBookList = ({ uid, name, screenName }: Props) => {
   /** 현재 페이지 */
   const [page, setPage] = useState(1);
   /** 페이지당 책 노출 수 */
@@ -33,7 +34,6 @@ const MyBookList = ({ uid, name }: Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     // console.log("💔💔getData 시작");
-
     const data = {
       state: state,
       userId: uid,
@@ -50,13 +50,10 @@ const MyBookList = ({ uid, name }: Props) => {
     })
       .then((res) => res.json())
       .then((jsondata) => {
-        if (authUser?.uid != undefined) {
-          setDataList(jsondata.result);
-          setPageList(jsondata.totalpages);
-          setTotalCount(jsondata.count);
-        } else {
-          alert("로그인 후 이용해 주세요🙏🙏");
-        }
+        setDataList(jsondata.result);
+        setPageList(jsondata.totalpages);
+        setTotalCount(jsondata.count);
+
         return jsondata.result;
       })
       .catch(() => {
@@ -79,9 +76,7 @@ const MyBookList = ({ uid, name }: Props) => {
   }, [authUser, router.isReady]);
 
   useEffect(() => {
-    if (authUser) {
-      getData();
-    }
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, size]);
 
@@ -178,14 +173,12 @@ const MyBookList = ({ uid, name }: Props) => {
         {dataList.map((book: any, index: number) => (
           <Link
             href={{
-              pathname: `/bookproject/${authUser?.email?.replace(
-                "@gmail.com",
-                ""
-              )}/mybook/${book.title}`,
+              pathname: `/bookproject/${screenName}/mybook/${book.title}`,
               query: {
                 isbn: book.isbn,
                 isbn13: book.isbn13 ? book.isbn13 : "null",
-                uid: authUser?.uid,
+                uid: uid,
+                name: name,
               },
             }}
             key={book.isbn + index}

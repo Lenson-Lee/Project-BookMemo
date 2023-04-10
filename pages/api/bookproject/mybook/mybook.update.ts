@@ -16,6 +16,5 @@ export default async function handler(req: any, res: any) {
       score: score,
     },
   });
-  console.log("👀 update finish : ", updated);
   res.status(200).json({ message: "수정 끝났어용" });
 }

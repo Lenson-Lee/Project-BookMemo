@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 export default async function handler(req: any, res: any) {
   const { userId, state, page, size } = JSON.parse(req.body);
 
-  // console.log("👀넘어온 uid : ", userId, " 책 상태 : ", state, "> mybook.get");
   //
   if (state === "wish") {
     const count = await prisma.bookMemo.count({
@@ -45,12 +44,6 @@ export default async function handler(req: any, res: any) {
   //페이징 되어야하는 버튼 수
   let totalpages = (count - (count % size)) / size + (count % size > 0 ? 1 : 0);
 
-  console.log(
-    `🐰${state}, ${userId} 총 갯수 : `,
-    count,
-    "총 페이지 수 : ",
-    totalpages
-  );
   console.log("mybook.get 끝");
   const result = await prisma.bookMemo.findMany({
     skip: page === 1 ? 0 : (page - 1) * size,
