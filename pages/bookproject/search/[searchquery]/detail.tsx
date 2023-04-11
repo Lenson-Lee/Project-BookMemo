@@ -42,6 +42,12 @@ interface AddType {
 interface LikeType {
   id: number;
   like: number;
+  contentId: number;
+  userId: string;
+  writerId: string;
+  replyId: number;
+  type: string;
+  isChecked: number;
 }
 function SearchQuery({ similar }: Props) {
   const settings = {
@@ -162,6 +168,7 @@ function SearchQuery({ similar }: Props) {
 
   /** 좋아요 클릭 이벤트 */
   async function likeQuery(likeData: LikeType) {
+    // like 증가
     const response = await fetch(`/api/bookproject/comment/comment.like.add`, {
       method: "POST",
       body: JSON.stringify(likeData),
@@ -308,10 +315,19 @@ function SearchQuery({ similar }: Props) {
                       {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}
                       <button
                         onClick={() => {
+                          console.log(item);
                           likeMutation.mutate({
                             id: item.id,
                             like: item.like + 1,
+                            //
+                            userId: item.userId,
+                            writerId: authUser ? authUser.authUser?.uid! : "",
+                            contentId: item.id,
+                            replyId: 0,
+                            type: "like",
+                            isChecked: 0,
                           });
+
                           alert(`  
                           ♡ ♡ ♡ ₍ᐢɞ̴̶̷.̮ɞ̴̶̷ᐢ₎ ♡ ♡ ♡
                           ┏━ ♡ ━ U U━ ♡ ━┓

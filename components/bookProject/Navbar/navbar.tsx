@@ -1,18 +1,52 @@
 import { useAuth } from "@/contexts/auth_user.context";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "../SearchBar/searchbar";
-import { signIn, useSession, signOut } from "next-auth/react";
-import Image from "next/image";
 
-const navbar = function () {
+const Navbar = function () {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
-
+  const [open, setOpen] = useState(false);
   const uid = authUser?.uid ?? "undefine";
 
+  const [note, setNote] = useState([]);
+
+  /** 사용자 notification 가져오기 */
+  const getData = async () => {
+    const response = await fetch("/api/bookproject/notification/note.get", {
+      method: "POST",
+      body: JSON.stringify({ userId: uid }),
+      headers: {
+        Accept: "application / json",
+      },
+    })
+      .then((res) => res.json())
+      .then((jsondata) => {
+        setNote(jsondata.note);
+        console.log(jsondata.note);
+        return jsondata.result;
+      })
+      .catch((err) => {
+        console.log("🙏🙏실패해요🙏🙏", err);
+      });
+  };
+
+  useEffect(() => {
+    if (uid !== "undefine") {
+      getData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid]);
+
   const logOutBtn = (
-    <div className="flex gap-x-4 items-center ">
-      <button className="flex items-center gap-x-2">
+    <div className="relative flex gap-x-4 items-center ">
+      <button
+        onClick={() => {
+          setOpen(!open);
+        }}
+        className="relative flex items-center gap-x-2"
+      >
         <Image
           src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
           className="w-10 h-10 rounded-full border"
@@ -23,6 +57,7 @@ const navbar = function () {
         <p className="font-semibold">
           {authUser?.displayName + "님" ?? "unknown"}
         </p>
+        <div className="absolute top-0 -right-2 bg-rose-500 w-2 h-2 rounded-full" />
       </button>
       <button
         className="hidden lg:block border rounded-lg text-xs text-gray-600 px-2 py-1 h-fit cursor:pointer"
@@ -30,6 +65,42 @@ const navbar = function () {
       >
         로그아웃
       </button>
+      {open && (
+        <div className="absolute shadow-lg right-0 top-12 border bg-white/75 backdrop-blur-lg px-4  py-2 rounded-lg w-72 cursor-pointer">
+          <div className="flex justify-between items-center">
+            <p className="text-sm font-semibold border-b pb-2 mb-2">알림</p>
+            <Link
+              href={{
+                pathname: `/bookproject/${authUser?.email?.replace(
+                  "@gmail.com",
+                  ""
+                )}`,
+                query: { uid: authUser?.uid },
+              }}
+              className="text-xs text-gray-400 border-b pb-2 mb-2"
+            >
+              더보기
+            </Link>
+          </div>
+          {note.length > 0 &&
+            note?.map((item: any) => {
+              return (
+                <div key={item.id}>
+                  <p className="text-sm font-light py-1">
+                    불** 님이 내 코멘트에 좋아요를 눌렀습니다.
+                  </p>
+                </div>
+              );
+            })}
+
+          {/* <p className="text-sm font-light py-1 text-gray-400 ">
+            내 게시글에 댓글이 달렸습니다.
+          </p>
+          <p className="text-sm font-light py-1 text-gray-400">
+            내 게시글에 댓글이 달렸습니다.
+          </p> */}
+        </div>
+      )}
     </div>
   );
 
@@ -46,12 +117,6 @@ const navbar = function () {
         className="rounded-lg px-2 lg:px-3 py-1 text-sm lg:text-base font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gray-400"
       >
         회원가입
-      </button>
-      <button
-        // onClick={signInWithGoogle}
-        className="text-sm lg:text-xs text-gray-400 hover:text-gray-500"
-      >
-        체험용 계정
       </button>
     </>
   );
@@ -128,4 +193,4 @@ const navbar = function () {
   );
 };
 
-export default navbar;
+export default Navbar;

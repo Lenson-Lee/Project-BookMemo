@@ -16,6 +16,7 @@ interface Props {
 }
 
 function Mybook({ alldata }: Props) {
+  const [openNote, setOpenNote] = useState<boolean>(false);
   const router = useRouter();
   const authUser = useAuth();
   /** 키워드 중복 제거 */
@@ -73,6 +74,46 @@ function Mybook({ alldata }: Props) {
           : `${router.query.name}님의 서재`}
       </p>
 
+      <div className="bg-white w-full p-6 lg:py-5 lg:px-10 rounded-xl border mb-4">
+        <div
+          onClick={() => {
+            setOpenNote(!openNote);
+          }}
+          className="flex justify-between items-center"
+        >
+          <div className="flex gap-x-2 items-center text-gray-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-5 h-5 "
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 2a6 6 0 00-6 6c0 1.887-.454 3.665-1.257 5.234a.75.75 0 00.515 1.076 32.91 32.91 0 003.256.508 3.5 3.5 0 006.972 0 32.903 32.903 0 003.256-.508.75.75 0 00.515-1.076A11.448 11.448 0 0116 8a6 6 0 00-6-6zM8.05 14.943a33.54 33.54 0 003.9 0 2 2 0 01-3.9 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+
+            <p>알림</p>
+          </div>
+          {openNote === false && <p className="text-sm">더보기</p>}
+        </div>
+        {openNote && (
+          <div className="mt-4">
+            <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600">
+              <p> 2023.03.03</p>
+              <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
+              <p> 김** 님이 좋아요를 눌렀습니다.</p>
+            </div>
+            <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-400">
+              <p> 2023.03.03</p>
+              <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
+              <p> 김** 님이 좋아요를 눌렀습니다.</p>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="lg:flex gap-x-4 mb-4">
         <div className="bg-white w-full lg:w-1/2 p-6 lg:py-10 lg:px-10 rounded-xl border">
           <div className="lg:flex gap-x-5 items-end">

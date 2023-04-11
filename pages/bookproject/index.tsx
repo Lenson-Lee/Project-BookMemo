@@ -55,6 +55,7 @@ function Home({
 
   const [isDropMenuOpen, setDropMenuOpen] = useState(false);
 
+  console.log(readUserData[0].displayName[0]);
   const toggleDropMenu = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
     setOpenUser(!openUser);
@@ -116,7 +117,7 @@ function Home({
               <div className="text-xl font-semibold ">
                 👀 유저들의 안목을 믿어보세요!
               </div>
-              <div className="text-gray-400 flex gap-x-4">
+              <div className="text-gray-400 text-sm flex gap-x-1">
                 <button
                   onClick={() => {
                     setState("star");
@@ -125,7 +126,7 @@ function Home({
                   className={
                     (state === "star"
                       ? "bg-yellow-300 text-white"
-                      : "bg-gray-100") + " text-md px-2 rounded-lg "
+                      : "bg-gray-100") + " px-2 rounded-lg "
                   }
                 >
                   별점 높은 순
@@ -138,7 +139,7 @@ function Home({
                   className={
                     (state === "save"
                       ? "bg-yellow-300 text-white"
-                      : "bg-gray-100") + " text-md px-2 rounded-lg "
+                      : "bg-gray-100") + " px-2 rounded-lg "
                   }
                 >
                   저장 많은 순
@@ -200,7 +201,7 @@ function Home({
                         />
                       )}
                       <p className="max-w-1/6 line-clamp-1">
-                        {user.displayName}
+                        {user.displayName[0] + " * * 님"}
                       </p>
                     </div>
                     <div className="flex gap-x-1">

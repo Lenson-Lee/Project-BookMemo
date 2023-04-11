@@ -59,6 +59,17 @@ model Comment {
   title       String
 }
 
+model Notification {
+    id          Int      @id @default(autoincrement())
+    userId      String
+    writerId    String
+    contentId   Int
+    replyId     Int?
+
+    type    String
+    isChecked Int
+    createdAt DateTime @default(now()) 
+}
 enum Role {
   USER
   ADMIN

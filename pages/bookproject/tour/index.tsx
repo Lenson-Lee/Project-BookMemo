@@ -147,9 +147,8 @@ function Tour({ categorybook, ItemNewSpecial }: Props) {
 
           <ApiBookListSlider apidata={ItemNewSpecial} slide={6} />
         </div>
-
-        <div className="bg-white w-1/3 h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border"></div>
       </div>
+      {/* <div className="bg-white w-1/3 h-fit px-6 pt-6 pb-10 lg:py-10 lg:px-10 rounded-xl border"></div> */}
     </ServiceLayout>
   );
 }
