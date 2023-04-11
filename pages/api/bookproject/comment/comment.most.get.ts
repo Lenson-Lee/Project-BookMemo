@@ -9,22 +9,20 @@ export async function getMostComment() {
     take: 12,
   });
 
-  //파이어베이스 데이터와 함께 넣을 곳
-  // let userData: any = [];
+  //닉네임, 프로필사진 찾기(파이어베이스)
+  const findResult = (uid: string) => MemberModel.findByDisplayName(uid);
 
-  // document.forEach(async (user) => {
-  //   //닉네임, 프로필사진 찾기(파이어베이스)
-  //   const findResult = await MemberModel.findByDisplayName(user.userId!);
+  const newUserArr = await Promise.all(
+    document.map(async (user) => {
+      const userInfo = await findResult(user.userId!);
 
-  //   //변수에 주입
-  //   userData.push({
-  //     displayName: findResult.name,
-  //     photoURL: findResult.photoURL,
-  //     data: user,
-  //   });
-  // });
+      const data = { ...user };
+      data["photoURL"] = userInfo.photoURL;
 
+      return data;
+    })
+  );
   console.log(">comment.most.get 끝 --END");
-  const data = { document };
+  const data = { newUserArr };
   return { data };
 }

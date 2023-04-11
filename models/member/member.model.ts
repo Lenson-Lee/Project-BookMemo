@@ -94,7 +94,7 @@ async function findByDisplayName(uid: string) {
         .doc(uid);
       const memberDoc = await transaction.get(memberRef);
       if (memberDoc.exists === false) {
-        console.log("😡 findByDisplayName가 없어요! uid :", uid);
+        console.info("😡 findByDisplayName가 없어요! uid :", uid);
       }
       return memberDoc._fieldsProto;
     }

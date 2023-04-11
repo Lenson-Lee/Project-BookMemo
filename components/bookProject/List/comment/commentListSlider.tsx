@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import { useMutation, useQueryClient } from "react-query";
 import { useAuth } from "@/contexts/auth_user.context";
+import Image from "next/image";
 
 interface Props {
   data: any;
@@ -87,7 +88,13 @@ const CommentSlider = ({ data }: Props) => {
                 <div className="border-b pb-4 mb-4">
                   <div className="flex justify-between items-center ">
                     <div className="flex gap-x-2 items-center">
-                      <div className="w-8 h-8 rounded-full bg-gray-700 border" />
+                      <Image
+                        src={item.photoURL}
+                        alt="프로필 이미지"
+                        width={500}
+                        height={500}
+                        className="w-8 h-8 rounded-full border bg-gray-100"
+                      />
                       <p className="text-lg font-medium">{item?.displayName}</p>
                     </div>
                     {/* 좋아요 💔1인당 1회만 가능하도록 해야한다 */}

@@ -38,7 +38,7 @@ function Home({
   scorebook,
   readuser,
 }: Props) {
-  const data = JSON.parse(comment).data.document;
+  const data = JSON.parse(comment).data.newUserArr;
 
   const rankData = JSON.parse(rankbook);
   const readUserData = JSON.parse(readuser).data.read;
@@ -55,7 +55,6 @@ function Home({
 
   const [isDropMenuOpen, setDropMenuOpen] = useState(false);
 
-  console.log(readUserData[0].displayName[0]);
   const toggleDropMenu = (e: React.MouseEvent<HTMLLIElement>) => {
     e.stopPropagation(); // 이벤트 캡쳐링 방지
     setOpenUser(!openUser);
