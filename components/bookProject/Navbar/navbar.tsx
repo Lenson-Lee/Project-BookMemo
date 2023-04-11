@@ -14,13 +14,9 @@ const Navbar = function () {
 
   /** 사용자 notification 가져오기 */
   const getData = async () => {
-    const response = await fetch("/api/bookproject/notification/note.get", {
-      method: "POST",
-      body: JSON.stringify({ userId: uid }),
-      headers: {
-        Accept: "application / json",
-      },
-    })
+    const response = await fetch(
+      `/api/bookproject/notification/note.get?userId=${authUser?.uid}`
+    )
       .then((res) => res.json())
       .then((jsondata) => {
         setNote(jsondata.note);
@@ -56,7 +52,9 @@ const Navbar = function () {
         <p className="font-semibold">
           {authUser?.displayName + "님" ?? "unknown"}
         </p>
-        <div className="absolute top-0 -right-2 bg-rose-500 w-2 h-2 rounded-full" />
+        {note.length > 0 && (
+          <div className="absolute top-0 -right-2 bg-rose-500 w-2 h-2 rounded-full" />
+        )}
       </button>
       <button
         className="hidden lg:block border rounded-lg text-xs text-gray-600 px-2 py-1 h-fit cursor:pointer"
@@ -64,7 +62,7 @@ const Navbar = function () {
       >
         로그아웃
       </button>
-      {open && (
+      {open && note.length > 0 && (
         <div className="absolute shadow-lg right-0 top-12 border bg-white/75 backdrop-blur-lg px-4  py-2 rounded-lg w-72 cursor-pointer">
           <div
             onClick={() => {

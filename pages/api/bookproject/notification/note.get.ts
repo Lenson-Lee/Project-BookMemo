@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export default async function getNotification(req: any, res: any) {
   const userArr = await prisma.notification.findMany({
     where: {
-      userId: req.userId,
+      userId: req.query.userId,
     },
     orderBy: [{ id: "desc" }],
   });

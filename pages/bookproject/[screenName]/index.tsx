@@ -50,17 +50,12 @@ function Mybook({ alldata }: Props) {
 
   /** 사용자 notification 가져오기 */
   const getData = async () => {
-    const response = await fetch("/api/bookproject/notification/note.get", {
-      method: "POST",
-      body: JSON.stringify({ userId: router.query.uid }),
-      headers: {
-        Accept: "application / json",
-      },
-    })
+    const response = await fetch(
+      `/api/bookproject/notification/note.get?userId=${authUser.authUser?.uid}`
+    )
       .then((res) => res.json())
       .then((jsondata) => {
         setNote(jsondata.note);
-        console.log(jsondata.note);
         return jsondata.result;
       })
       .catch((err) => {
@@ -98,49 +93,52 @@ function Mybook({ alldata }: Props) {
           : `${router.query.name}님의 서재`}
       </p>
 
-      <div className="bg-white w-full p-6 lg:py-5 lg:px-10 rounded-xl border mb-4 cursor-pointer">
-        <div
-          onClick={() => {
-            setOpenNote(!openNote);
-          }}
-          className="flex justify-between items-center"
-        >
-          <div className="flex gap-x-2 items-center text-gray-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5 "
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 2a6 6 0 00-6 6c0 1.887-.454 3.665-1.257 5.234a.75.75 0 00.515 1.076 32.91 32.91 0 003.256.508 3.5 3.5 0 006.972 0 32.903 32.903 0 003.256-.508.75.75 0 00.515-1.076A11.448 11.448 0 0116 8a6 6 0 00-6-6zM8.05 14.943a33.54 33.54 0 003.9 0 2 2 0 01-3.9 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+      {note.length > 0 && router.query.uid === authUser.authUser?.uid && (
+        <div className="bg-white w-full p-6 lg:py-5 lg:px-10 rounded-xl border mb-4 cursor-pointer">
+          <div
+            onClick={() => {
+              setOpenNote(!openNote);
+              noteFn();
+            }}
+            className="flex justify-between items-center"
+          >
+            <div className="flex gap-x-2 items-center text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-5 h-5 "
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 2a6 6 0 00-6 6c0 1.887-.454 3.665-1.257 5.234a.75.75 0 00.515 1.076 32.91 32.91 0 003.256.508 3.5 3.5 0 006.972 0 32.903 32.903 0 003.256-.508.75.75 0 00.515-1.076A11.448 11.448 0 0116 8a6 6 0 00-6-6zM8.05 14.943a33.54 33.54 0 003.9 0 2 2 0 01-3.9 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
 
-            <p>알림</p>
+              <p>알림</p>
+            </div>
+            {openNote === false && <p className="text-sm">더보기</p>}
+            {openNote === true && <p className="text-sm">닫기</p>}
           </div>
-          {openNote === false && <p className="text-sm">더보기</p>}
-          {openNote === true && <p className="text-sm">닫기</p>}
-        </div>
-        {openNote && (
-          <div className="mt-4">
-            {note.length > 0 &&
-              note?.map((item: any) => {
-                return (
-                  <div
-                    key={item.id}
-                    className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600"
-                  >
-                    <p className="text-md font-light py-1 line-clamp-1">
-                      {item.type === "like" &&
-                        item.name + " 님이 나의 코멘트에 좋아요를 눌렀습니다."}
-                    </p>
-                  </div>
-                );
-              })}
-            {/* <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600">
+          {openNote && (
+            <div className="mt-4">
+              {note.length > 0 &&
+                note?.map((item: any) => {
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600"
+                    >
+                      <p className="text-md font-light py-1 line-clamp-1">
+                        {item.type === "like" &&
+                          item.name +
+                            " 님이 나의 코멘트에 좋아요를 눌렀습니다."}
+                      </p>
+                    </div>
+                  );
+                })}
+              {/* <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600">
               <p> 2023.03.03</p>
               <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
               <p> 김** 님이 좋아요를 눌렀습니다.</p>
@@ -150,9 +148,11 @@ function Mybook({ alldata }: Props) {
               <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
               <p> 김** 님이 좋아요를 눌렀습니다.</p>
             </div> */}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="lg:flex gap-x-4 mb-4">
         <div className="bg-white w-full lg:w-1/2 p-6 lg:py-10 lg:px-10 rounded-xl border">
           <div className="lg:flex gap-x-5 items-end">
