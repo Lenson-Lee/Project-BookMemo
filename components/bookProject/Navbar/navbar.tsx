@@ -24,11 +24,10 @@ const Navbar = function () {
       .then((res) => res.json())
       .then((jsondata) => {
         setNote(jsondata.note);
-        console.log(jsondata.note);
         return jsondata.result;
       })
       .catch((err) => {
-        console.log("🙏🙏실패해요🙏🙏", err);
+        console.log("🙏🙏알림 DB 실패해요🙏🙏", err);
       });
   };
 
@@ -67,8 +66,13 @@ const Navbar = function () {
       </button>
       {open && (
         <div className="absolute shadow-lg right-0 top-12 border bg-white/75 backdrop-blur-lg px-4  py-2 rounded-lg w-72 cursor-pointer">
-          <div className="flex justify-between items-center">
-            <p className="text-sm font-semibold border-b pb-2 mb-2">알림</p>
+          <div
+            onClick={() => {
+              setOpen(false);
+            }}
+            className="flex justify-between items-center border-b pb-2 mb-2"
+          >
+            <p className="text-sm font-semibold">알림</p>
             <Link
               href={{
                 pathname: `/bookproject/${authUser?.email?.replace(
@@ -77,28 +81,22 @@ const Navbar = function () {
                 )}`,
                 query: { uid: authUser?.uid },
               }}
-              className="text-xs text-gray-400 border-b pb-2 mb-2"
+              className="text-xs text-gray-400"
             >
-              더보기
+              자세히
             </Link>
           </div>
           {note.length > 0 &&
             note?.map((item: any) => {
               return (
                 <div key={item.id}>
-                  <p className="text-sm font-light py-1">
-                    불** 님이 내 코멘트에 좋아요를 눌렀습니다.
+                  <p className="text-sm font-light py-1 line-clamp-1">
+                    {item.type === "like" &&
+                      item.name + " 님이 나의 코멘트에 좋아요를 눌렀습니다."}
                   </p>
                 </div>
               );
             })}
-
-          {/* <p className="text-sm font-light py-1 text-gray-400 ">
-            내 게시글에 댓글이 달렸습니다.
-          </p>
-          <p className="text-sm font-light py-1 text-gray-400">
-            내 게시글에 댓글이 달렸습니다.
-          </p> */}
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { useAuth } from "@/contexts/auth_user.context";
+import getNotification from "@/pages/api/bookproject/notification/note.get";
 
 interface Props {
   alldata: any; //장르 차트를 위한 카운트
@@ -17,6 +18,8 @@ interface Props {
 
 function Mybook({ alldata }: Props) {
   const [openNote, setOpenNote] = useState<boolean>(false);
+  const [note, setNote] = useState([]); //알림 정보
+
   const router = useRouter();
   const authUser = useAuth();
   /** 키워드 중복 제거 */
@@ -45,10 +48,31 @@ function Mybook({ alldata }: Props) {
     staleTime: 10 * 1000,
   });
 
+  /** 사용자 notification 가져오기 */
+  const getData = async () => {
+    const response = await fetch("/api/bookproject/notification/note.get", {
+      method: "POST",
+      body: JSON.stringify({ userId: router.query.uid }),
+      headers: {
+        Accept: "application / json",
+      },
+    })
+      .then((res) => res.json())
+      .then((jsondata) => {
+        setNote(jsondata.note);
+        console.log(jsondata.note);
+        return jsondata.result;
+      })
+      .catch((err) => {
+        console.log("🙏🙏알림 DB 실패해요🙏🙏", err);
+      });
+  };
+
   /** router query를 받고 시작 */
   useEffect(() => {
     if (!router.isReady) return;
-    console.log("🤦‍♀️ 라우터 쿼리 : ", router.query);
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
 
   useEffect(() => {
@@ -74,7 +98,7 @@ function Mybook({ alldata }: Props) {
           : `${router.query.name}님의 서재`}
       </p>
 
-      <div className="bg-white w-full p-6 lg:py-5 lg:px-10 rounded-xl border mb-4">
+      <div className="bg-white w-full p-6 lg:py-5 lg:px-10 rounded-xl border mb-4 cursor-pointer">
         <div
           onClick={() => {
             setOpenNote(!openNote);
@@ -98,10 +122,25 @@ function Mybook({ alldata }: Props) {
             <p>알림</p>
           </div>
           {openNote === false && <p className="text-sm">더보기</p>}
+          {openNote === true && <p className="text-sm">닫기</p>}
         </div>
         {openNote && (
           <div className="mt-4">
-            <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600">
+            {note.length > 0 &&
+              note?.map((item: any) => {
+                return (
+                  <div
+                    key={item.id}
+                    className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600"
+                  >
+                    <p className="text-md font-light py-1 line-clamp-1">
+                      {item.type === "like" &&
+                        item.name + " 님이 나의 코멘트에 좋아요를 눌렀습니다."}
+                    </p>
+                  </div>
+                );
+              })}
+            {/* <div className="flex gap-x-4 border-b py-2 my-2 cursor-pointer text-gray-600">
               <p> 2023.03.03</p>
               <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
               <p> 김** 님이 좋아요를 눌렀습니다.</p>
@@ -110,7 +149,7 @@ function Mybook({ alldata }: Props) {
               <p> 2023.03.03</p>
               <p> 아가미 - 구병모 책에 남긴 회원님의 코멘트에</p>
               <p> 김** 님이 좋아요를 눌렀습니다.</p>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
