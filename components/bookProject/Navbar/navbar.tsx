@@ -6,7 +6,8 @@ import SearchBar from "../SearchBar/searchbar";
 
 const Navbar = function () {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { loading, authUser, signOut, signInWithGoogle } = useAuth();
+  const { loading, authUser, signOut, signInWithGoogle, signInTestAdmin } =
+    useAuth();
   const [open, setOpen] = useState(false);
   const uid = authUser?.uid ?? "undefine";
 
@@ -34,6 +35,10 @@ const Navbar = function () {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
+  useEffect(() => {
+    console.log(authUser);
+  }, [authUser]);
+
   const logOutBtn = (
     <div className="relative flex gap-x-4 items-center ">
       <button
@@ -43,7 +48,7 @@ const Navbar = function () {
         className="relative flex items-center gap-x-2"
       >
         <Image
-          src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
+          src={authUser?.photoURL ?? "/images/undefined.svg"}
           className="w-10 h-10 rounded-full border"
           alt={"유저프로필사진"}
           width={500}
@@ -113,6 +118,22 @@ const Navbar = function () {
         className="rounded-lg px-2 lg:px-3 py-1 text-sm lg:text-base font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gray-400"
       >
         회원가입
+      </button>
+      <button
+        onClick={(e) => {
+          const pw = prompt("비밀번호를 입력해 주세요.");
+
+          if (pw === "book1234") {
+            e.preventDefault();
+            console.log("체험용 로그인 성공합니다.");
+            signInTestAdmin("book@gmail.com", pw);
+          } else {
+            alert("비밀번호가 틀렸습니다.");
+          }
+        }}
+        className="px-1 text-xs text-gray-400"
+      >
+        체험용 로그인
       </button>
     </>
   );

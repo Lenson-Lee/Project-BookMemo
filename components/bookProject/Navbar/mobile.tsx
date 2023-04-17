@@ -31,7 +31,7 @@ const navbar = function () {
     <div className="flex gap-x-4 items-center ">
       <button className="flex items-center gap-x-2">
         <Image
-          src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
+          src={authUser?.photoURL ?? "/images/undefined.svg"}
           className="w-10 h-10 rounded-full border"
           alt={"유저프로필사진"}
           width={500}

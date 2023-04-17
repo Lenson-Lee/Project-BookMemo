@@ -6,6 +6,7 @@ interface InAuthUserContext {
   authUser: InAuthUser | null;
   loading: boolean; //로그인 진행중인지 체크
   signInWithGoogle: () => void; //구글을 이용한 로그인 동작(클릭 등)
+  signInTestAdmin: any;
   signOut: () => void;
 }
 
@@ -13,7 +14,7 @@ const AuthUserContext = createContext<InAuthUserContext>({
   authUser: null,
   loading: true, //로그인진행중
   signInWithGoogle: async () => ({ user: null, creadential: null }),
-
+  signInTestAdmin: async () => ({}),
   signOut: () => {},
 });
 

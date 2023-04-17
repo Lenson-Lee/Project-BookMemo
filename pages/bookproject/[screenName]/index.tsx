@@ -98,7 +98,6 @@ function Mybook({ alldata }: Props) {
           <div
             onClick={() => {
               setOpenNote(!openNote);
-              noteFn();
             }}
             className="flex justify-between items-center"
           >

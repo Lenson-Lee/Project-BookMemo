@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { InAuthUser } from "@/models/in_auth_user";
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  User,
+} from "firebase/auth";
 import FirebaseClient from "@/models/firebase_client";
 
 export default function useFirebaseAuth() {
@@ -19,7 +25,7 @@ export default function useFirebaseAuth() {
       );
 
       if (signInResult.user) {
-        //파이어베이스 add
+        //파이어베이스 정보 그대로 add
         const resp = await fetch("/api/bookproject/members.add", {
           method: "post",
           headers: {
@@ -41,7 +47,27 @@ export default function useFirebaseAuth() {
       console.error(err);
     }
   }
+  //___________________________________________________
 
+  /** 체험용 계정 로그인 로직 */
+  async function signInTestAdmin(email: string, password: string) {
+    const auth = getAuth();
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const { user } = userCredential;
+        return user;
+        // ...
+      })
+      .catch((error) => {
+        if (email === "" || password === "") {
+          console.info("🤔 비밀번호가 비어있어요");
+        }
+        console.info("🤔 error code & message : ", error.code, error.message);
+      });
+  }
+
+  //___________________________________________________
   /** 로그아웃 > 모든걸 초기화 */
   const clear = () => {
     setAuthUser(null);
@@ -57,12 +83,22 @@ export default function useFirebaseAuth() {
       return;
     }
     setLoading(true);
-    setAuthUser({
-      uid: authState.uid,
-      email: authState.email,
-      photoURL: authState.photoURL,
-      displayName: authState.displayName,
-    });
+    //테스트계정 상태 설정
+    if (authState.email === "book@gmail.com") {
+      setAuthUser({
+        uid: authState.uid,
+        email: authState.email,
+        photoURL: authState.photoURL,
+        displayName: "체험용",
+      });
+    } else {
+      setAuthUser({
+        uid: authState.uid,
+        email: authState.email,
+        photoURL: authState.photoURL,
+        displayName: authState.displayName,
+      });
+    }
     setLoading(false);
   };
 
@@ -71,6 +107,7 @@ export default function useFirebaseAuth() {
     const unsubscribe =
       FirebaseClient.getInstance().Auth.onAuthStateChanged(AuthStateChanged);
 
+    console.log("🤔 로그인 정보 변경");
     return () => unsubscribe();
   }, []);
 
@@ -78,6 +115,7 @@ export default function useFirebaseAuth() {
     authUser,
     loading,
     signInWithGoogle,
+    signInTestAdmin,
     signOut,
   };
 }

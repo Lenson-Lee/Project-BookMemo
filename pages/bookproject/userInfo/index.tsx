@@ -10,7 +10,7 @@ const UserInfo = () => {
     <div className="">
       <div className="flex-col items-center justify-center">
         <Image
-          src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
+          src={authUser?.photoURL ?? "/images/undefined.svg"}
           className="w-20 h-20 rounded-full border"
           alt={"유저프로필사진"}
           width={500}
