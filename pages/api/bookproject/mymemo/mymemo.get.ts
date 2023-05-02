@@ -260,47 +260,46 @@ export async function getMyTotalData(uid: any) {
     take: 5,
   });
 
-  /** 월별 독서 카운트를 위한 목록 조회 */
-  const getDate = (time: string) => {
-    const now = new Date(new Date().setDate(1));
-    const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
-    const doubleMonth = new Date(now.setMonth(now.getMonth() - 2));
-
-    if (time === "this") {
-      return now;
-    } else if (time === "last") {
-      return lastMonth;
-    } else if (time === "doubleLast") {
-      return doubleMonth;
-    }
-  };
+  //월별 기록 활동 확인을 위해 날짜 생성
+  const today = new Date();
+  const thisMonth = today.getMonth() + 1;
+  const thisYear = today.getFullYear();
+  const lastMonth = thisMonth === 1 ? 12 : thisMonth - 1;
+  const lastMonthYear = thisMonth === 1 ? thisYear - 1 : thisYear;
+  const twoMonthsAgo = thisMonth <= 2 ? 12 + thisMonth - 2 : thisMonth - 2;
+  const twoMonthsAgoYear = thisMonth <= 2 ? thisYear - 1 : thisYear;
 
   /** 월별 기록활동 카운트 createAt으로 산정 */
   const thisMonthCnt = await prisma.memoList.findMany({
     where: {
       userId: uid ? uid : "undefine",
-      createdAt: {
-        gte: getDate("this"),
-      },
+      AND: [
+        { createdAt: { gte: new Date(`${thisYear}-${thisMonth}-01`) } },
+        { createdAt: { lt: new Date(`${thisYear}-${thisMonth + 1}-01`) } },
+      ],
     },
   });
 
   const lastMonthCnt = await prisma.memoList.findMany({
     where: {
       userId: uid ? uid : "undefine",
-      createdAt: {
-        gte: getDate("last"),
-        lte: getDate("last"),
-      },
+      AND: [
+        { createdAt: { gte: new Date(`${lastMonthYear}-${lastMonth}-01`) } },
+        { createdAt: { lt: new Date(`${thisYear}-${thisMonth}-01`) } },
+      ],
     },
   });
   const doubleLastMonthCnt = await prisma.memoList.findMany({
     where: {
       userId: uid ? uid : "undefine",
-      createdAt: {
-        gte: getDate("doubleLast"),
-        lte: getDate("doubleLast"),
-      },
+      AND: [
+        {
+          createdAt: {
+            gte: new Date(`${twoMonthsAgoYear}-${twoMonthsAgo}-01`),
+          },
+        },
+        { createdAt: { lt: new Date(`${lastMonthYear}-${lastMonth}-01`) } },
+      ],
     },
   });
 

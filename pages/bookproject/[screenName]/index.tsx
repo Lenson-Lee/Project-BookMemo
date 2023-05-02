@@ -31,7 +31,6 @@ function Mybook({ alldata }: Props) {
 
   /** 월별 기록활동 카운트(기록포함) */
   const monthdata = alldata.data.month;
-
   const monthMemocount =
     monthdata.thisMonth.length - monthdata.lastMonth.length;
 
