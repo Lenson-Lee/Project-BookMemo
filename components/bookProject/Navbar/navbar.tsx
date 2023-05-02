@@ -35,10 +35,6 @@ const Navbar = function () {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
-  useEffect(() => {
-    console.log(authUser);
-  }, [authUser]);
-
   const logOutBtn = (
     <div className="relative flex gap-x-4 items-center ">
       <button

@@ -284,6 +284,7 @@ export async function getMyTotalData(uid: any) {
       },
     },
   });
+
   const lastMonthCnt = await prisma.memoList.findMany({
     where: {
       userId: uid ? uid : "undefine",
