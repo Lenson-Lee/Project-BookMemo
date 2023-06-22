@@ -11,7 +11,7 @@ const navbar = function () {
   //   <div className="flex justify-between">
   //     <div className="">
   //       <p className="text-center text-lg">📒</p>
-  //       <p className="text-gray-500 text-xs">나의 서재</p>
+  //       <p className="text-gray-500 text-xs">나의 기록</p>
   //     </div>
   // <div className="">
   //   <p className="text-center text-lg">👀</p>
@@ -93,7 +93,7 @@ const navbar = function () {
         >
           <div className="">
             <p className="text-center text-lg">📒</p>
-            <p className="text-gray-500 text-xs">나의 서재</p>
+            <p className="text-gray-500 text-xs">나의 기록</p>
           </div>
         </Link>
         <Link

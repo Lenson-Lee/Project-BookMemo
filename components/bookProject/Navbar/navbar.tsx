@@ -165,7 +165,7 @@ const Navbar = function () {
               }}
               className="font-semibold"
             >
-              나의 서재
+              나의 기록
             </button>
           )}
           {uid !== "undefine" && (
@@ -179,7 +179,7 @@ const Navbar = function () {
               }}
               className="font-semibold"
             >
-              나의 서재
+              나의 기록
             </Link>
           )}
           <Link

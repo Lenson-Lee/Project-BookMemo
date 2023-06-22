@@ -27,7 +27,7 @@ interface AddType {
   keywords: any;
 }
 
-//나의 서재 책 상세정보
+//나의 기록 책 상세정보
 function DetailQuery({ serverdata, userData }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();

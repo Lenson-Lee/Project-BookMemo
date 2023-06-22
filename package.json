@@ -6,7 +6,7 @@
     "localdev": "next dev -p 5000",
     "dev": "dotenv -e .env.development next dev -p 5000",
     "build": "next build",
-    "start": "next start -p 3002",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "prebuild": "tailwindcss-cli build -o styles/tailwindSSR.css --minify",
     "migrate:mysql": "dotenv -e .env.development -- npx prisma migrate dev --name tables",
