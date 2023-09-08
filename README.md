@@ -1,17 +1,16 @@
-# Project-BookMemo
+# 📒Project-BookMemo
 
 독서 기록 커뮤니티 프로젝트
 
 - 인원 : 1인
-- 기간 : 2023.01 - 2023.03
 
-- 📒 [보러가기](https://lensonee.com/bookproject)
+- 💻 [보러가기](https://lensonee.com/bookproject)
 - 📑 [기능설명](https://velog.io/@lenson-lee/%EB%8F%85%EC%84%9C%EA%B8%B0%EB%A1%9D-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8-%EA%B0%9C%EB%B0%9C)
 
-👀 **체험용PW : book1234**
+- 👀 **체험용PW : book1234**
 
-👥 **회원가입 수집정보 : (구글 로그인)이름, 프로필사진, 이메일**
-
+- 👥 **회원가입 수집정보 : (구글 로그인)이름, 프로필사진, 이메일**
+___
 ### Requirement
 
 - Node.js 16.14.0
